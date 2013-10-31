@@ -8,7 +8,21 @@
 			<div class="panel panel-default">
 			  <div class="panel-heading">General Requirements</div>
 			  <div class="panel-body">
-			    Panel content
+			    <div class="" ng-repeat="requirement in genReqs">
+			    	<div class="row">
+			    		<div class="col-md-6">
+			    			<h4 ng-bind="requirement.className"></h4>
+			    		</div>
+			    		<div class="col-md-6">
+			    			<div class="btn-group">
+			    				<button ng-show="requirement.available" type="button" class="btn btn-success">Add Class</button>
+			    				<button ng-show="requirement.available" type="button" class="btn btn-danger" disabled="disabled">Drop Class</button>
+								<button ng-show="!requirement.available" type="button" class="btn btn-success" disabled="disabled">Class Not Available</button>
+			    			</div>
+			    			
+			    		</div>
+			    	</div>
+			    </div>
 			  </div>
 			</div>
 		</div>
@@ -16,7 +30,20 @@
 			<div class="panel panel-default">
 			  <div class="panel-heading">Major Requirments</div>
 			  <div class="panel-body">
-			    Panel content
+			    <div class="" ng-repeat="requirement in majorReqs">
+			    	<div class="row">
+			    		<div class="col-md-6">
+					    	<h4 ng-bind="requirement.className"></h4>
+			    		</div>
+			    		<div class="col-md-6">
+			    			<div class="btn-group">
+			    				<button ng-show="requirement.available" type="button" class="btn btn-success">Add Class</button>
+			    				<button ng-show="requirement.available" type="button" class="btn btn-danger" disabled="disabled">Drop Class</button>
+				    			<button ng-show="!requirement.available" type="button" class="btn btn-success" disabled="disabled">Class Not Available</button>
+			    			</div>
+			    		</div>
+			    	</div>
+			    </div>
 			  </div>
 			</div>
 		</div>

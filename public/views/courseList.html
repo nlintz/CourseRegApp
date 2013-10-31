@@ -2,6 +2,28 @@
 <ng-include src="'/partials/secondaryNav.html'"></ng-include>
 <div class="row">
 	<div class="col-md-2 col-sm-2 col-xs-3 layout-box"></div>
-	<div class="col-md-6 col-sm-6 col-xs-9 layout-box"></div>
+	<div class="col-md-6 col-sm-6 col-xs-9">
+		<div class="row" ng-repeat="class in classList">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">{{class.className}}</h3>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-9 col-sm-9 col-xs-9">
+							<p>{{class.professor}}
+						</div>
+						<div class="col-md-3 col-sm-3 col-xs-3 ">
+							<div class="btn-group">
+			    				<button ng-show="class.available" type="button" class="btn btn-success">Add Class</button>
+			    				<button ng-show="class.available" type="button" class="btn btn-danger" disabled="disabled">Drop Class</button>
+			    				<button ng-show="!class.available" type="button" class="btn btn-success" disabled="disabled">Class Not Available</button>
+			    			</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="col-md-4 col-sm-4 col-xs-4 layout-box hidden-xs"></div>
 </div>
