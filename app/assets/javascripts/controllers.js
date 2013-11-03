@@ -9,4 +9,19 @@ controllers.controller('RequirementsController', ['$scope', function($scope){
 
 	$scope.majorReqs = majorReqsStub;
 	$scope.genReqs = genReqsStub;
+
+	$scope.user.schedule = [{className: "approx"}, {className: "dynamics"}];
+}]);
+
+controllers.controller('ClassListController', ['$scope', 'ClassesStub', function($scope, ClassesStub){
+	var classes = ClassesStub.data;
+
+	//Preprocess data to convert strings to booleans
+	angular.forEach(classes, function(classModel){
+		angular.forEach(classModel.sections, function(section){
+			section.available = (section.available == 'true') ? true : false
+		});
+	});
+	$scope.classList = classes;
+
 }]);

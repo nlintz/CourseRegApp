@@ -1,0 +1,31 @@
+<div class="container">
+	<div class="row">
+		<h1>Registered Courses</h1>
+		<div class="col-md-12">
+			<div class="row" ng-repeat="class in user.schedule">
+				<div class="col-md-11 col-md-offset-1">
+					<div class="row">
+						<div class="col-md-2">
+							<div class="row">
+								<button type="button" class="btn">
+									<span class="glyphicon glyphicon-arrow-up"></span>
+								</button>
+							</div>
+							<div class="row">
+								<button type="button" class="btn">
+									<span class="glyphicon glyphicon-arrow-down"></span>
+								</button>
+							</div>
+						</div> <!-- updown buttons -->
+						<div class="col-md-8">{{class.className}}</div> <!-- class name -->
+						<div class="col-md-2">
+							<button type="button" class="btn">
+								<a class="close">x</a>
+							</button>
+						</div> <!-- Delete Button -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

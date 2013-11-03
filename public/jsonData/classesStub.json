@@ -1,0 +1,44 @@
+[
+	{
+	"className": "Art of Approx",
+	"description":"Good class to learn about approximation",
+	"tags":["tagA","tagB","tagC"],
+	"prerequisites":["None"],
+	"professor":"Sanjoy",
+	"studentsRegistered":"10",
+	"sections": [{
+		"meetingDays":"M T",
+		"startTime":"9:00",
+		"endTime":"10:50",
+		"sectionNumber":"0",
+		"available":"true",
+		"studentsRegistered":"10",
+		"spotsInClass":"30"
+		}]
+	},
+	{
+	"className": "Dynamics",
+	"description":"Prepare to DIE",
+	"tags":["tagA","tagB","tagC"],
+	"prerequisites":["Mechanics","Thermo","Transport"],
+	"professor":"Chris Lee",
+	"sections": [{
+		"meetingDays":"W",
+		"startTime":"1:30",
+		"endTime":"3:10",
+		"sectionNumber":"0",
+		"available":"true",
+		"studentsRegistered":"5",
+		"spotsInClass":"10"
+		},
+		{
+		"meetingDays":"M",
+		"startTime":"9:00",
+		"endTime":"10:40",
+		"sectionNumber":"1",
+		"available":"false",
+		"studentsRegistered":"10",
+		"spotsInClass":"10"
+		}]
+	}
+]

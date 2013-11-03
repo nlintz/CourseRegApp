@@ -1,23 +1,33 @@
 <ng-include src="'/partials/topNav.html'"></ng-include>
 <ng-include src="'/partials/secondaryNav.html'"></ng-include>
 <div class="row">
-	<div class="col-md-2 col-sm-2 col-xs-3 layout-box"></div>
-	<div class="col-md-6 col-sm-6 col-xs-9">
+	<div class="col-md-3 col-sm-3 col-xs-3">
+		<div ng-include src="'/partials/course_sidebar.html'"></div>
+	</div>
+	<div class="col-md-5 col-sm-5 col-xs-9">
 		<div class="row" ng-repeat="class in classList">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">{{class.className}}</h3>
+					<p>{{class.professor}}</p>
 				</div>
 				<div class="panel-body">
 					<div class="row">
-						<div class="col-md-9 col-sm-9 col-xs-9">
-							<p>{{class.professor}}
+						<div class="col-md-6 col-sm-6 col-xs-6">
+							<p>{{class.description}}</p>
 						</div>
-						<div class="col-md-3 col-sm-3 col-xs-3 ">
-							<div class="btn-group">
-			    				<button ng-show="class.available" type="button" class="btn btn-success">Add Class</button>
-			    				<button ng-show="class.available" type="button" class="btn btn-danger" disabled="disabled">Drop Class</button>
-			    				<button ng-show="!class.available" type="button" class="btn btn-success" disabled="disabled">Class Not Available</button>
+						<div class="col-md-6 col-sm-6 col-xs-6">
+							<div class="btn-group" ng-repeat="section in class.sections">
+								<div class="row">
+								<p>Meeting Days:</p>
+								<p>{{section.meetingDays}} {{section.startTime}}-{{section.endTime}}</p>
+								<p>Section Number: {{section.sectionNumber}}</p>
+								<p>Number of Students In Class: {{section.studentsRegistered}}/{{section.spotsInClass}}</p>
+			    				<button ng-show="section.available" type="button" class="btn btn-success">Add Class</button>
+			    				<button ng-show="section.available" type="button" class="btn btn-danger" disabled="disabled">Drop Class</button>
+			    				<button ng-show="!section.available" type="button" class="btn btn-success" disabled="disabled">Class Not Available</button>
+			    				</div>
+			    				<br>
 			    			</div>
 						</div>
 					</div>
@@ -25,5 +35,5 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-4 col-sm-4 col-xs-4 layout-box hidden-xs"></div>
+	<div class="col-md-4 col-sm-4 col-xs-4 hidden-xs"></div>
 </div>
