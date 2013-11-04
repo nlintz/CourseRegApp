@@ -22,6 +22,7 @@ controllers.controller('ClassListController', ['$scope', 'ClassesStub', function
 			section.available = (section.available == 'true') ? true : false
 		});
 	});
+
 	$scope.classList = classes;
 
 }]);
