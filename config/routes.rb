@@ -1,5 +1,7 @@
 CinnamonCourseRegApp::Application.routes.draw do
 
+  resources :courses
+
   resources :users
 
   root 'home#index'
