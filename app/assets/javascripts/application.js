@@ -12,6 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require underscore
+//= require CalendarDataService
 //= require angular.min
 //= require turbolinks
 //= require_tree .

@@ -25,3 +25,20 @@ controllers.controller('ClassListController', ['$scope', 'ClassesStub', function
 	$scope.classList = classes;
 
 }]);
+
+controllers.controller('CalendarController', ['$scope', function($scope){
+	//TODO REFACTOR INTO ANGULAR SERVICES
+	var sortService = new SortService();
+	var axesDataService = new AxesDataService();
+	var eventsDataService = new EventDataService();
+
+	var stubEvents = [{start:30, end:150}, {start:20, end:150}];
+	var sortedEvents = sortService.sortEventsByStartTime(stubEvents);
+	var eventsData = eventsDataService.getEventsData(sortedEvents);
+
+	var axesTimings = axesDataService.axesTimings(9, 17, 1);
+	var axesData = axesDataService.getAxesData(axesTimings);
+
+	$scope.axesData = axesData;
+	$scope.mondayClasses = eventsData;
+}]);

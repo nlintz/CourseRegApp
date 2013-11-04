@@ -1,0 +1,33 @@
+<div class="container" ng-controller="CalendarController">
+	<div class="row">
+		<div class="col-md-1">
+			<div class="row" ng-repeat="axesTime in axesData">
+				{{axesTime.time}}
+			</div>
+		</div>
+		<div class="col-md-10">
+			<div class="col-md-2 col-md-offset-2">
+				<p>M</p>
+				<div ng-repeat="class in mondayClasses">
+					{{class.start}}
+				</div>
+			</div>
+			<div class="col-md-2">
+				<p>T</p>
+				<div ng-repeat="class in tuesdayClasses"></div>
+			</div>
+			<div class="col-md-2">
+				<p>W</p>
+				<div ng-repeat="class in wednesdayClasses"></div>
+			</div>
+			<div class="col-md-2">
+				<p>T</p>
+				<div ng-repeat="class in thursdayClasses"></div>
+			</div>
+			<div class="col-md-2">
+				<p>F</p>
+				<div ng-repeat="class in fridayClasses"></div>
+			</div>
+		</div>
+	</div>
+</div>
