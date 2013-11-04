@@ -1,6 +1,6 @@
 var controllers = angular.module('Controllers', []);
 
-controllers.controller('RequirementsController', ['$scope', function($scope){
+controllers.controller('RequirementsController', ['$scope', 'User', function($scope, User){
 	var userStub = {name:"Sharon Grimshaw", major:"Design", yog:"2015"};
 	$scope.user = userStub;
 

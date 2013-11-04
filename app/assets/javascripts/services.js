@@ -13,3 +13,10 @@ services.factory('Schedule', [function(){
 		}
 	};
 }]);
+
+services.service('User', [function(){
+	this.name = "Tyler";
+	this.major = "E:XYZ";
+	this.yog = 15;
+	this.takenClasses = [];
+}]);
