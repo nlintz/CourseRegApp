@@ -1,4 +1,26 @@
 <p id="notice"><%= notice %></p>
 
+Course Name:
+<%= @course.name %>
+<br>
+
+Course Description:
+<%= @course.description %>
+<br>
+
+Course Available:
+<%= @course.available %>
+<br>
+
+Professor:
+<%= @course.professor %>
+<br>
+
+Tags:
+<% @course.tags.each do |tag| %>
+	<%= tag.name %>,
+<% end %>
+<br>
+
 <%= link_to 'Edit', edit_course_path(@course) %> |
 <%= link_to 'Back', courses_path %>

@@ -1,9 +1,11 @@
 <h1>Listing courses</h1>
-
 <table>
   <thead>
     <tr>
-      <th></th>
+      <th>Course Name</th>
+      <th>Course Description</th>
+      <th>Course Available</th>
+      <th>Professor</th>
       <th></th>
       <th></th>
     </tr>
@@ -12,6 +14,10 @@
   <tbody>
     <% @courses.each do |course| %>
       <tr>
+        <td><%= course.name %></td>
+        <td><%= course.description %></td>
+        <td><%= course.professor %></td>
+        <td><%= course.available %></td>
         <td><%= link_to 'Show', course %></td>
         <td><%= link_to 'Edit', edit_course_path(course) %></td>
         <td><%= link_to 'Destroy', course, method: :delete, data: { confirm: 'Are you sure?' } %></td>
