@@ -32,13 +32,20 @@ controllers.controller('CalendarController', ['$scope', function($scope){
 	var axesDataService = new AxesDataService();
 	var eventsDataService = new EventDataService();
 
-	var stubEvents = [{start:30, end:150}, {start:20, end:150}];
+	var stubEvents = [{start:30, end:150}, {start:30, end:200}];
 	var sortedEvents = sortService.sortEventsByStartTime(stubEvents);
 	var eventsData = eventsDataService.getEventsData(sortedEvents);
 
-	var axesTimings = axesDataService.axesTimings(9, 17, 1);
+	var axesTimings = axesDataService.axesTimings(9, 18, 1);
 	var axesData = axesDataService.getAxesData(axesTimings);
 
 	$scope.axesData = axesData;
+
+	angular.forEach(eventsData, function(classEvent){
+		classEvent.height = (classEvent.end - classEvent.start)/60;
+	});
+
 	$scope.mondayClasses = eventsData;
+	$scope.tuesdayClasses = eventsData;
+
 }]);

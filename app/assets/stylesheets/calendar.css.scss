@@ -1,0 +1,37 @@
+.calendar-container {
+	width: 100%;
+	padding-left: 0!important;
+	padding-right: 0!important;
+}
+
+.calendar-events-container {
+	padding-left: 0!important;
+	padding-right: 0!important;
+	left: 15%;
+}
+
+.calendar-axes-container {
+	left: 15%;
+	margin-top: 5%;
+
+	.axes-time {
+		height: 40px;
+	}
+}
+
+.calendar-column {
+	padding-left: 0!important;
+	padding-right: 0!important;
+	width: 60px !important;
+}
+
+.calendar-event {
+	position: relative;
+	border: 1px solid black;
+	margin-top: 25px;
+	position: absolute;
+}
+
+.day-of-week {
+	text-align: center;
+}
