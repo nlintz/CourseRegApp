@@ -23,7 +23,7 @@ controllers.controller('RequirementsController', ['$scope', 'ClassesStub', 'User
 	$scope.addCourseToSchedule = function(course, section){
 		Schedule.addCourse(course, section, Schedule.getCourses().length);
 		$scope.user.schedule = Schedule.getCourses();
-		course.inSchedule = true;
+		// course.inSchedule = true;
 	};
 
 	$scope.changeCoursePriority = function(index, direction){
@@ -53,7 +53,7 @@ controllers.controller('ClassListController', ['$scope', 'ClassesStub', 'User', 
 		angular.forEach(course.sections, function(section){
 			section.available = (section.available == 'true' || section.available == true) ? true : false
 		});
-		course.inSchedule = false;
+		course.inSchedule = courseInSchedule(course.course);
 	});
 
 	$scope.addCourseToSchedule = function(course, section){
@@ -67,7 +67,7 @@ controllers.controller('ClassListController', ['$scope', 'ClassesStub', 'User', 
 	};
 
 	//TODO refactor into attribute of classes
-	$scope.courseInSchedule = function(course){
+	function courseInSchedule(course){
 		angular.forEach($scope.user.schedule, function(scheduleElement){
 			if (scheduleElement.course == course){
 				return true;

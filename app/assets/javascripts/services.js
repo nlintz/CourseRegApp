@@ -7,7 +7,8 @@ services.factory('ClassesStub', ['$http', function($http){
 services.service('Schedule', [function(){
 	this.courses = [];
 	this.addCourse = function(course, section, priority){
-		var scheduleElement = {course:course, section:section, priority:priority};		
+		var scheduleElement = {course:course, section:section, priority:priority};
+		scheduleElement.course.inSchedule = true;
 		this.courses.push(scheduleElement);
 		this.sortCourses();
 	};
