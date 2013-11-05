@@ -37,15 +37,17 @@ controllers.controller('ClassListController', ['$scope', 'ClassesStub', 'User', 
 	$scope.classList = ClassesStub.data;
 
 	//Data preprocessing for classes
-	angular.forEach($scope.classList, function(classModel){
-		angular.forEach(classModel.sections, function(section){
+	angular.forEach($scope.classList, function(course){
+		angular.forEach(course.sections, function(section){
 			section.available = (section.available == 'true' || section.available == true) ? true : false
 		});
+		course.inSchedule = false;
 	});
 
 	$scope.addCourseToSchedule = function(course, section){
 		Schedule.addCourse(course, section, Schedule.getCourses().length);
 		$scope.user.schedule = Schedule.getCourses();
+		course.inSchedule = true;
 	};
 
 	$scope.changeCoursePriority = function(index, direction){
@@ -69,6 +71,7 @@ controllers.controller('ClassListController', ['$scope', 'ClassesStub', 'User', 
 	$scope.removeCourseFromSchedule = function(course){
 		Schedule.removeCourse(course);
 		$scope.user.schedule = Schedule.getCourses();
+		course.inSchedule = false;
 	};
 
 }]);

@@ -28,16 +28,21 @@
 									<p>Number of Students In Class: {{section.studentsRegistered}}/{{section.spotsInClass}}</p>
 				    				
 				    				<div ng-show="sectionAvailable(section)">
-				    					<div ng-show="!courseInSchedule(course)">
-				    						{{courseInSchedule(course)}}
+				    					<div ng-show="!course.inSchedule">
 						    				<button type="button" class="btn btn-success" ng-click="addCourseToSchedule(course, section)">Add Class</button>
-						    				<button type="button" class="btn btn-danger" disabled="disabled">Drop Class</button>
 					    				</div>
-					    				<div ng-show="courseInSchedule(course)">
+					    				<div ng-show="course.inSchedule" class="container">
+								    		<button type="button" class="btn btn-danger btn-lg" ng-click="removeCourseFromSchedule(course)">Drop Class</button>
+							    		</div>
+
+					    				<!-- <div ng-show="courseInSchedule(course)">
+					    					<button type="button" class="btn btn-danger" disabled="disabled">Drop Class</button>
+					    				</div> -->
+<!-- 					    				<div ng-show="courseInSchedule(course)">
 						    				<button type="button" class="btn btn-success" disabled="disabled">Add Class</button>
 						    				<button type="button" class="btn btn-danger" >Drop Class</button>
 						    			</div>
-					    			</div>
+ -->					    		</div>
 
 				    				<div ng-show="!sectionAvailable(section)">
 				    					<button ng-show="!section.available" type="button" class="btn btn-success" disabled="disabled">Class Not Available</button>

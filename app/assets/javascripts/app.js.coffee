@@ -1,4 +1,4 @@
-CourseRegistrationApp = angular.module('CourseRegistrationApp', ['Controllers', 'Services']);
+CourseRegistrationApp = angular.module('CourseRegistrationApp', ['Controllers', 'Services', 'Directives']);
 
 CourseRegistrationApp.config(['$routeProvider', ($routeProvider) ->
 	$routeProvider.when('/', {templateUrl: '/views/requirements.html', controller: 'RequirementsController'})

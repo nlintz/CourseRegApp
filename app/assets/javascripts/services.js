@@ -29,8 +29,13 @@ services.service('Schedule', [function(){
 	};
 
 	this.removeCourse = function(course){
-		var index = this.courses.indexOf(course);
-		this.courses.splice(index, 1);
+		var indexToRemove = -1;
+		angular.forEach(this.courses, function(courseInSchedule, index){
+			if (courseInSchedule.course == course){
+				indexToRemove = index;
+			};
+		});
+		this.courses.splice(indexToRemove, 1);
 		this.reprioritizeCourses();
 	};
 
