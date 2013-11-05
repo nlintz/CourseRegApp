@@ -16,7 +16,7 @@
 			    			<h4 ng-bind="course.className"></h4>
 			    		</div>
 			    		<div class="col-md-6">
-		    					<div ng-show="!course.inSchedule">
+<!-- 		    					<div ng-show="!course.inSchedule">
 				    				<button type="button" class="btn btn-success" ng-click="addCourseToSchedule(course, course.sections[0])">Add Class</button>
 				    				<button type="button" class="btn btn-danger" disabled="disabled">Drop Class</button>
 									<div ng-show="course.inSchedule">
@@ -27,7 +27,7 @@
 			    				<div ng-show="!course.sections[0].available">
 			    					<button ng-show="!section.available" type="button" class="btn btn-success" disabled="disabled">Class Not Available</button>
 			    				</div>
-		    			</div>
+ -->		    		</div>
 			    	</div>
 			    </div>
 			  </div>
@@ -43,7 +43,7 @@
 			    			<h4 ng-bind="course.className"></h4>
 			    		</div>
 			    		<div class="col-md-6">
-		    					<div ng-show="!course.inSchedule">
+		    					<div>
 				    				<button type="button" class="btn btn-success" ng-click="addCourseToSchedule(course, course.sections[0])">Add Class</button>
 				    				<button type="button" class="btn btn-danger" disabled="disabled">Drop Class</button>
 				    			</div>
@@ -52,6 +52,7 @@
 						    		<button type="button" class="btn btn-danger" ng-click="removeCourseFromSchedule(course)">Drop Class</button>
 					    		</div>
 			    				<div ng-show=" '!course.sections[0].available' ">
+			    				<!-- <div ng-show=""> -->
 			    					{{course.sections[0].available}}
 			    					<button ng-show=" '!course.sections[0].available' " type="button" class="btn btn-success" disabled="disabled">Class Not Available</button>
 			    				</div>
