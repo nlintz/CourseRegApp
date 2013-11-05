@@ -25,6 +25,31 @@
 		}]
 	},
 	{
+	"className": "Random Class",
+	"description":"lorem ipsum",
+	"tags":["tagA","tagB","tagC"],
+	"prerequisites":["None"],
+	"professor":"Nathan",
+	"studentsRegistered":"10",
+	"available":"true",
+	"sections": [{
+		"meetingDays":"M T",
+		"startTime":"9:00",
+		"endTime":"10:50",
+		"sectionNumber":"0",
+		"studentsRegistered":"10",
+		"spotsInClass":"30"
+		},
+		{
+		"meetingDays":"M T",
+		"startTime":"9:00",
+		"endTime":"10:50",
+		"sectionNumber":"0",
+		"studentsRegistered":"10",
+		"spotsInClass":"30"
+		}]
+	},
+	{
 	"className": "Dynamics",
 	"description":"Prepare to DIE",
 	"tags":["tagA","tagB","tagC"],

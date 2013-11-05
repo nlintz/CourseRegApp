@@ -39,7 +39,7 @@ controllers.controller('RequirementsController', ['$scope', 'ClassesStub', 'User
 
 }]);
 
-controllers.controller('ClassListController', ['$scope', 'ClassesStub', 'User', 'Schedule', function($scope, ClassesStub, User, Schedule){
+controllers.controller('ClassListController', ['$scope', '$routeParams', 'ClassesStub', 'User', 'Schedule', function($scope, $routeParams, ClassesStub, User, Schedule){
 	$scope.user = User;
 	$scope.user.schedule = Schedule.getCourses();
 
@@ -105,3 +105,4 @@ controllers.controller('CalendarController', ['$scope', function($scope){
 	$scope.tuesdayClasses = eventsData;
 
 }]);
+
