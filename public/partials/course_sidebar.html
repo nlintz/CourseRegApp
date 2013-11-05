@@ -7,19 +7,19 @@
 					<div class="row">
 						<div class="col-md-2">
 							<div class="row">
-								<button type="button" class="btn" ng-click="changeClassPriority($index, 'up')">
+								<button type="button" class="btn" ng-click="changeCoursePriority($index, 'up')">
 									<span class="glyphicon glyphicon-arrow-up"></span>
 								</button>
 							</div>
 							<div class="row">
-								<button type="button" class="btn" ng-click="changeClassPriority($index, 'down')">
+								<button type="button" class="btn" ng-click="changeCoursePriority($index, 'down')">
 									<span class="glyphicon glyphicon-arrow-down"></span>
 								</button>
 							</div>
 						</div>
 						<div class="col-md-8">{{class.course.className}}</div>
 						<div class="col-md-2">
-							<button type="button" class="btn" ng-click="removeClassFromSchedule(class)">
+							<button type="button" class="btn" ng-click="removeCourseFromSchedule(class)">
 								<a class="close">x</a>
 							</button>
 						</div>

@@ -1,30 +1,30 @@
 var controllers = angular.module('Controllers', []);
 
 controllers.controller('RequirementsController', ['$scope', 'User', 'Schedule', function($scope, User, Schedule){
-	// var userStub = {name:"Sharon Grimshaw", major:"Design", yog:"2015"};
-	$scope.user = User;
-	
-	if (Schedule.courses.length < 3)
+	//Stubs
+	if (Schedule.courses.length == 0)
 	{
 		Schedule.addCourse({className:"Class1"},[], 0);
 		Schedule.addCourse({className:"Class2"},[], 1);
 		Schedule.addCourse({className:"Class3"},[], 2);
 	};
 
-	$scope.user.schedule = Schedule.getCourses();
-
 	var majorReqsStub = [{className:"HFID", available:true},{className:"RPRM", available:true},{className:"ADE", available:false}];
 	var genReqsStub = [{className:"Probstat", available:true},{className:"Design Depth", available:true},{className:"FBE", available:false}];
 
 	$scope.majorReqs = majorReqsStub;
 	$scope.genReqs = genReqsStub;
+	//
 
-	$scope.removeClassFromSchedule = function(course){
+	$scope.user = User;
+	$scope.user.schedule = Schedule.getCourses();
+
+	$scope.removeCourseFromSchedule = function(course){
 		Schedule.removeCourse(course);
 		$scope.user.schedule = Schedule.getCourses();
 	};
 
-	$scope.changeClassPriority = function(index, direction){
+	$scope.changeCoursePriority = function(index, direction){
 		Schedule.swapCourses(index, direction)
 	};
 
@@ -34,25 +34,41 @@ controllers.controller('ClassListController', ['$scope', 'ClassesStub', 'User', 
 	$scope.user = User;
 	$scope.user.schedule = Schedule.getCourses();
 
-	var classes = ClassesStub.data;
+	$scope.classList = ClassesStub.data;
 
-	//Preprocess data to convert strings to booleans
-	angular.forEach(classes, function(classModel){
+	//Data preprocessing for classes
+	angular.forEach($scope.classList, function(classModel){
 		angular.forEach(classModel.sections, function(section){
-			section.available = (section.available == 'true') ? true : false
+			section.available = (section.available == 'true' || section.available == true) ? true : false
 		});
 	});
 
-	$scope.classList = classes;
-
-
-	$scope.removeClassFromSchedule = function(course){
-		Schedule.removeCourse(course);
+	$scope.addCourseToSchedule = function(course, section){
+		Schedule.addCourse(course, section, Schedule.getCourses().length);
 		$scope.user.schedule = Schedule.getCourses();
 	};
 
-	$scope.changeClassPriority = function(index, direction){
+	$scope.changeCoursePriority = function(index, direction){
 		Schedule.swapCourses(index, direction)
+	};
+
+	//TODO refactor into attribute of classes
+	$scope.courseInSchedule = function(course){
+		angular.forEach($scope.user.schedule, function(scheduleElement){
+			if (scheduleElement.course == course){
+				return true;
+			};
+		});
+		return false;
+	};
+
+	$scope.sectionAvailable = function(section){
+		return section.available ? true : false;
+	};
+
+	$scope.removeCourseFromSchedule = function(course){
+		Schedule.removeCourse(course);
+		$scope.user.schedule = Schedule.getCourses();
 	};
 
 }]);

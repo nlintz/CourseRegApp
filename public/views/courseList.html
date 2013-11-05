@@ -5,27 +5,44 @@
 		<div ng-include src="'/partials/course_sidebar.html'"></div>
 	</div>
 	<div class="col-md-5 col-sm-5 col-xs-9">
-		<div class="row" ng-repeat="class in classList">
+		<div class="row" ng-repeat="course in classList">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">{{class.className}}</h3>
-					<p>{{class.professor}}</p>
+					<h3 class="panel-title">{{course.className}}</h3>
+					<p>{{course.professor}}</p>
 				</div>
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-md-6 col-sm-6 col-xs-6">
-							<p>{{class.description}}</p>
+							<p>{{course.description}}</p>
 						</div>
 						<div class="col-md-6 col-sm-6 col-xs-6">
-							<div class="btn-group" ng-repeat="section in class.sections">
+							<div class="btn-group" ng-repeat="section in course.sections">
 								<div class="row">
-								<p>Meeting Days:</p>
-								<p>{{section.meetingDays}} {{section.startTime}}-{{section.endTime}}</p>
-								<p>Section Number: {{section.sectionNumber}}</p>
-								<p>Number of Students In Class: {{section.studentsRegistered}}/{{section.spotsInClass}}</p>
-			    				<button ng-show="section.available" type="button" class="btn btn-success">Add Class</button>
-			    				<button ng-show="section.available" type="button" class="btn btn-danger" disabled="disabled">Drop Class</button>
-			    				<button ng-show="!section.available" type="button" class="btn btn-success" disabled="disabled">Class Not Available</button>
+									{{section.availible}}
+
+
+									<p>Meeting Days:</p>
+									<p>{{section.meetingDays}} {{section.startTime}}-{{section.endTime}}</p>
+									<p>Section Number: {{section.sectionNumber}}</p>
+									<p>Number of Students In Class: {{section.studentsRegistered}}/{{section.spotsInClass}}</p>
+				    				
+				    				<div ng-show="sectionAvailable(section)">
+				    					<div ng-show="!courseInSchedule(course)">
+				    						{{courseInSchedule(course)}}
+						    				<button type="button" class="btn btn-success" ng-click="addCourseToSchedule(course, section)">Add Class</button>
+						    				<button type="button" class="btn btn-danger" disabled="disabled">Drop Class</button>
+					    				</div>
+					    				<div ng-show="courseInSchedule(course)">
+						    				<button type="button" class="btn btn-success" disabled="disabled">Add Class</button>
+						    				<button type="button" class="btn btn-danger" >Drop Class</button>
+						    			</div>
+					    			</div>
+
+				    				<div ng-show="!sectionAvailable(section)">
+				    					<button ng-show="!section.available" type="button" class="btn btn-success" disabled="disabled">Class Not Available</button>
+				    				</div>
+
 			    				</div>
 			    				<br>
 			    			</div>
