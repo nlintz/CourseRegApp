@@ -1,16 +1,17 @@
 var controllers = angular.module('Controllers', []);
 
-controllers.controller('RequirementsController', ['$scope', 'User', 'Schedule', function($scope, User, Schedule){
+controllers.controller('RequirementsController', ['$scope', 'ClassesStub', 'User', 'Schedule', function($scope, ClassesStub, User, Schedule){
 	//Stubs
-	if (Schedule.courses.length == 0)
-	{
-		Schedule.addCourse({className:"Class1"},[], 0);
-		Schedule.addCourse({className:"Class2"},[], 1);
-		Schedule.addCourse({className:"Class3"},[], 2);
-	};
+	var majorReqsStub = ClassesStub.data;
+	var genReqsStub = majorReqsStub;
 
-	var majorReqsStub = [{className:"HFID", available:true},{className:"RPRM", available:true},{className:"ADE", available:false}];
-	var genReqsStub = [{className:"Probstat", available:true},{className:"Design Depth", available:true},{className:"FBE", available:false}];
+	angular.forEach(majorReqsStub, function(course){
+		angular.forEach(course.sections, function(section){
+			section.available = (section.available == 'true' || section.available == true) ? true : false
+		});
+		course.inSchedule = false;
+	});
+
 
 	$scope.majorReqs = majorReqsStub;
 	$scope.genReqs = genReqsStub;
@@ -19,13 +20,24 @@ controllers.controller('RequirementsController', ['$scope', 'User', 'Schedule', 
 	$scope.user = User;
 	$scope.user.schedule = Schedule.getCourses();
 
-	$scope.removeCourseFromSchedule = function(course){
-		Schedule.removeCourse(course);
+	$scope.addCourseToSchedule = function(course, section){
+		Schedule.addCourse(course, section, Schedule.getCourses().length);
 		$scope.user.schedule = Schedule.getCourses();
+		course.inSchedule = true;
 	};
 
 	$scope.changeCoursePriority = function(index, direction){
 		Schedule.swapCourses(index, direction)
+	};
+
+	$scope.removeCourseFromSchedule = function(course){
+		Schedule.removeCourse(course);
+		$scope.user.schedule = Schedule.getCourses();
+		course.inSchedule = false;
+	};
+
+	$scope.changeCoursePriority = function(index, direction){
+		Schedule.swapCourses(index, direction);
 	};
 
 }]);
