@@ -31,6 +31,8 @@ services.service('Schedule', [function(){
 
 	this.removeCourse = function(course){
 		var indexToRemove = -1;
+
+		course.inSchedule = false;
 		angular.forEach(this.courses, function(courseInSchedule, index){
 			if (courseInSchedule.course == course){
 				indexToRemove = index;

@@ -9,7 +9,6 @@ controllers.controller('RequirementsController', ['$scope', 'ClassesStub', 'User
 		angular.forEach(course.sections, function(section){
 			section.available = (section.available == 'true' || section.available == true) ? true : false
 		});
-		course.inSchedule = false;
 	});
 
 
@@ -23,7 +22,6 @@ controllers.controller('RequirementsController', ['$scope', 'ClassesStub', 'User
 	$scope.addCourseToSchedule = function(course, section){
 		Schedule.addCourse(course, section, Schedule.getCourses().length);
 		$scope.user.schedule = Schedule.getCourses();
-		// course.inSchedule = true;
 	};
 
 	$scope.changeCoursePriority = function(index, direction){
@@ -33,7 +31,6 @@ controllers.controller('RequirementsController', ['$scope', 'ClassesStub', 'User
 	$scope.removeCourseFromSchedule = function(course){
 		Schedule.removeCourse(course);
 		$scope.user.schedule = Schedule.getCourses();
-		course.inSchedule = false;
 	};
 
 	$scope.changeCoursePriority = function(index, direction){
@@ -53,13 +50,11 @@ controllers.controller('ClassListController', ['$scope', 'ClassesStub', 'User', 
 		angular.forEach(course.sections, function(section){
 			section.available = (section.available == 'true' || section.available == true) ? true : false
 		});
-		course.inSchedule = courseInSchedule(course.course);
 	});
 
 	$scope.addCourseToSchedule = function(course, section){
 		Schedule.addCourse(course, section, Schedule.getCourses().length);
 		$scope.user.schedule = Schedule.getCourses();
-		course.inSchedule = true;
 	};
 
 	$scope.changeCoursePriority = function(index, direction){
@@ -83,7 +78,6 @@ controllers.controller('ClassListController', ['$scope', 'ClassesStub', 'User', 
 	$scope.removeCourseFromSchedule = function(course){
 		Schedule.removeCourse(course);
 		$scope.user.schedule = Schedule.getCourses();
-		course.inSchedule = false;
 	};
 
 }]);
