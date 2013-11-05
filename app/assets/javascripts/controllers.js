@@ -33,13 +33,13 @@ controllers.controller('RequirementsController', ['$scope', 'ClassesStub', 'User
 		$scope.user.schedule = Schedule.getCourses();
 	};
 
-	$scope.changeCoursePriority = function(index, direction){
-		Schedule.swapCourses(index, direction);
-	};
-
 }]);
 
 controllers.controller('ClassListController', ['$scope', '$routeParams', 'ClassesStub', 'User', 'Schedule', function($scope, $routeParams, ClassesStub, User, Schedule){
+	if ($routeParams.searchQuery){
+		$scope.searchQuery = $routeParams.searchQuery;
+	};
+	
 	$scope.user = User;
 	$scope.user.schedule = Schedule.getCourses();
 
@@ -55,10 +55,6 @@ controllers.controller('ClassListController', ['$scope', '$routeParams', 'Classe
 	$scope.addCourseToSchedule = function(course, section){
 		Schedule.addCourse(course, section, Schedule.getCourses().length);
 		$scope.user.schedule = Schedule.getCourses();
-	};
-
-	$scope.changeCoursePriority = function(index, direction){
-		Schedule.swapCourses(index, direction)
 	};
 
 	//TODO refactor into attribute of classes
@@ -106,3 +102,39 @@ controllers.controller('CalendarController', ['$scope', function($scope){
 
 }]);
 
+controllers.controller('SearchController', ['$scope', '$location', function($scope, $location){
+	$scope.searchModel = $scope.searchQuery ? $scope.searchQuery : "";
+	$scope.searchForClasses = function(searchModel){
+		$location.path('search/'+$scope.searchModel);
+	};
+}]);
+
+controllers.controller('CourseSidebarController', ['$scope', '$filter', 'Schedule', 'ClassesStub', function($scope, $filter, Schedule, ClassesStub){
+	
+	ClassesStub.then(function(data){
+		$scope.allCourses = data.data;
+	});
+
+	$scope.sidebarAddModel = "";
+
+	$scope.addCourseFromSidebar = function(course){
+		if ($scope.sidebarAddModel){
+			var courseToAdd = $filter('filter')($scope.allCourses, $scope.sidebarAddModel)[0];
+			if (courseToAdd.available && !courseToAdd.inSchedule){
+				Schedule.addCourse(courseToAdd, 0, Schedule.getCourses().length);
+				$scope.sidebarAddModel = "";
+				}
+			}
+		$scope.user.schedule = Schedule.getCourses();
+	};
+
+	$scope.changeCoursePriority = function(index, direction){
+		Schedule.swapCourses(index, direction)
+	};
+
+	$scope.removeCourseFromSchedule = function(course){
+		console.log('getting called')
+		Schedule.removeCourse(course);
+		$scope.user.schedule = Schedule.getCourses();
+	};
+}]);

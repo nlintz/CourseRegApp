@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" ng-controller="CourseSidebarController">
 	<div class="row">
 		<h1>Preferred Courses</h1>
 		<div class="col-md-12">
@@ -30,8 +30,12 @@
 				<div class="col-md-12">
 					<p>Add Class</p>
 					<div class="input-group">
-						<input type="text" class="form-control" placeholder="Class Name" />
-						<span class="input-group-addon glyphicon glyphicon-plus"></span>
+						<input type="text" ng-model="sidebarAddModel" ui-keypress="{13:'addCourseFromSidebar(sidebarAddModel)'}" class="form-control" placeholder="Class Name" />
+						<span class="input-group-addon" ng-click="addCourseFromSidebar(sidebarAddModel)">
+							<button type="button" class="btn sidebar-plus-btn">
+								<a class="glyphicon glyphicon-plus sidebar-add-target"></a>
+							</button>
+						</span>
 					</div>
 				</div>
 			</div>

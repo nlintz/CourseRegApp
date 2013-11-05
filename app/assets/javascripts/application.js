@@ -15,5 +15,6 @@
 //= require underscore
 //= require CalendarDataService
 //= require angular.min
+//= require keypress
 //= require turbolinks
 //= require_tree .
