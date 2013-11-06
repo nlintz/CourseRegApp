@@ -10,32 +10,11 @@
 		<div class="col-md-11 calendar-events-container">
 			<div class="col-md-2 calendar-column">
 				<p class="day-of-week">M</p>
-				<div ng-repeat="class in mondayClasses">
-					<div class="calendar-event" ng-style="{ height: (class.height) * 40, top: (class.start), width: (class.width * 60), left: (class.column * 30)}">{{class.start}}</div>
-				</div>
-			</div>
-			<div class="col-md-2 calendar-column">
-				<p class="day-of-week">T</p>
-				<div ng-repeat="class in mondayClasses">
-					<div class="calendar-event" ng-style="{ height: (class.height) * 40, top: (class.start), width: (class.width * 60), left: (class.column * 30)}">{{class.start}}</div>
-				</div>
-			</div>
-			<div class="col-md-2 calendar-column">
-				<p class="day-of-week">W</p>
-				<div ng-repeat="class in mondayClasses">
-					<div class="calendar-event" ng-style="{ height: (class.height) * 40, top: (class.start), width: (class.width * 60), left: (class.column * 30)}">{{class.start}}</div>
-				</div>
-			</div>
-			<div class="col-md-2 calendar-column">
-				<p class="day-of-week">Th</p>
-				<div ng-repeat="class in mondayClasses">
-					<div class="calendar-event" ng-style="{ height: (class.height) * 40, top: (class.start), width: (class.width * 60), left: (class.column * 30)}">{{class.start}}</div>
-				</div>
-			</div>
-			<div class="col-md-2 calendar-column">
-				<p class="day-of-week">F</p>
-				<div ng-repeat="class in mondayClasses">
-					<div class="calendar-event" ng-style="{ height: (class.height) * 40, top: (class.start), width: (class.width * 60), left: (class.column * 30)}">{{class.start}}</div>
+				<div ng-repeat="scheduledCourse in user.schedule">
+					<div ng-repeat="section in scheduledCourse.course.sections">
+						<!-- <div class="calendar-event" ng-style="{ height: (section.height) * 40, top: (section.start), width: (section.width * 60), left: (section.column * 30)}">{{class.start}}</div> -->
+						<div class="calendar-event" ng-style="{ height: computeHeight(section), top: (section.start), width: (100), left: (30)}">{{class.start}}</div>
+					</div>
 				</div>
 			</div>
 		</div>

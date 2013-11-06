@@ -1,20 +1,20 @@
 var controllers = angular.module('Controllers', []);
 
+function processCourseAvailable(courses){
+	angular.forEach(courses, function(course){
+		course.available = (course.available == 'true' || course.available == true) ? true : false
+	});
+}
+
 controllers.controller('RequirementsController', ['$scope', 'ClassesStub', 'User', 'Schedule', function($scope, ClassesStub, User, Schedule){
 	//Stubs
 	var majorReqsStub = ClassesStub.data;
 	var genReqsStub = majorReqsStub;
 
-	angular.forEach(majorReqsStub, function(course){
-		angular.forEach(course.sections, function(section){
-			section.available = (section.available == 'true' || section.available == true) ? true : false
-		});
-	});
-
+	processCourseAvailable(majorReqsStub);
 
 	$scope.majorReqs = majorReqsStub;
 	$scope.genReqs = genReqsStub;
-	//
 
 	$scope.user = User;
 	$scope.user.schedule = Schedule.getCourses();
@@ -46,11 +46,7 @@ controllers.controller('ClassListController', ['$scope', '$routeParams', 'Classe
 	$scope.classList = ClassesStub.data;
 
 	//Data preprocessing for classes
-	angular.forEach($scope.classList, function(course){
-		angular.forEach(course.sections, function(section){
-			section.available = (section.available == 'true' || section.available == true) ? true : false
-		});
-	});
+	processCourseAvailable($scope.classList)
 
 	$scope.addCourseToSchedule = function(course, section){
 		Schedule.addCourse(course, section, Schedule.getCourses().length);
@@ -78,11 +74,46 @@ controllers.controller('ClassListController', ['$scope', '$routeParams', 'Classe
 
 }]);
 
-controllers.controller('CalendarController', ['$scope', function($scope){
+controllers.controller('CalendarController', ['$scope', 'Schedule', 'ClassesStub', function($scope, Schedule, ClassesStub){
 	//TODO REFACTOR INTO ANGULAR SERVICES
 	var sortService = new SortService();
 	var axesDataService = new AxesDataService();
 	var eventsDataService = new EventDataService();
+
+	var calendarEvents = [];
+	var dayStart = 9;
+
+	function convertSectionTimeToIntArray(section){
+		return [_.map(section.startTime.split(':'), function(time){return parseInt(time, 10)}),
+		_.map(section.endTime.split(':'), function(time){return parseInt(time, 10)})];
+	}
+
+	function convertSectionTimeToMinutes(section){
+		var sectionTime = convertSectionTimeToIntArray(section);
+		var startTime = sectionTime[0];
+		var endTime = sectionTime[1];
+
+		var startHour = parseInt(startTime[0], 10) - dayStart;
+		var endHour = parseInt(endTime[0], 10) - dayStart;
+		return {start:startHour*60 + startTime[1], end:endHour*60 + endTime[1]};
+	};
+
+	ClassesStub.then(function(data){
+		Schedule.addCourse(data.data[0], 1, 1)
+		$scope.mondayClasses = Schedule.getCourses()[0].course.sections
+	});
+
+	$scope.$watchCollection('user.schedule', function(scheduleElements){
+		angular.forEach(scheduleElements, function(scheduleElement){
+			angular.forEach(scheduleElement.course.sections, function(section){
+				var sectionStartEndTimes = convertSectionTimeToMinutes(section)
+				section.start = sectionStartEndTimes.start;
+				section.end = sectionStartEndTimes.end;
+			});
+		});
+	});
+
+	
 
 	var stubEvents = [{start:30, end:150}, {start:30, end:200}];
 	var sortedEvents = sortService.sortEventsByStartTime(stubEvents);
@@ -92,6 +123,15 @@ controllers.controller('CalendarController', ['$scope', function($scope){
 	var axesData = axesDataService.getAxesData(axesTimings);
 
 	$scope.axesData = axesData;
+
+	$scope.computeHeight = function(courseSection){
+		return (courseSection.end - courseSection.start)/60;
+	};
+
+	$scope.computeWidths = function(courseSections){
+		// var sortedEvents = sortService.sortEventsByStartTime(stubEvents);
+		// var eventsData = eventsDataService.getEventsData(sortedEvents);
+	};
 
 	angular.forEach(eventsData, function(classEvent){
 		classEvent.height = (classEvent.end - classEvent.start)/60;
@@ -113,6 +153,7 @@ controllers.controller('CourseSidebarController', ['$scope', '$filter', 'Schedul
 	
 	ClassesStub.then(function(data){
 		$scope.allCourses = data.data;
+		processCourseAvailable($scope.allCourses)
 	});
 
 	$scope.sidebarAddModel = "";
@@ -133,7 +174,6 @@ controllers.controller('CourseSidebarController', ['$scope', '$filter', 'Schedul
 	};
 
 	$scope.removeCourseFromSchedule = function(course){
-		console.log('getting called')
 		Schedule.removeCourse(course);
 		$scope.user.schedule = Schedule.getCourses();
 	};
