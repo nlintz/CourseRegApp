@@ -1,4 +1,4 @@
-CourseRegistrationApp = angular.module('CourseRegistrationApp', ['Controllers', 'Services', 'Directives', 'Filters', 'ui.keypress']);
+CourseRegistrationApp = angular.module('CourseRegistrationApp', ['Controllers', 'Services', 'Directives', 'Filters', 'ui.keypress', 'firebase']);
 
 CourseRegistrationApp.config(['$routeProvider', ($routeProvider) ->
 	$routeProvider.when('/', {templateUrl: '/views/requirements.html', controller: 'RequirementsController', resolve: {ClassesStub: 'ClassesStub'}})

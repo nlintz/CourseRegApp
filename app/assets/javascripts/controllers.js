@@ -6,15 +6,17 @@ function processCourseAvailable(courses){
 	});
 }
 
-controllers.controller('RequirementsController', ['$scope', 'ClassesStub', 'User', 'Schedule', function($scope, ClassesStub, User, Schedule){
+controllers.controller('RequirementsController', ['$scope', 'angularFire', 'User', 'Schedule', function($scope, angularFire, User, Schedule){
+	var GeneralRequirements = new Firebase("https://team-cinnamon.firebaseio.com/GeneralRequirements");
+	var MajorRequirements = new Firebase("https://team-cinnamon.firebaseio.com/MajorRequirements");
 	//Stubs
-	var majorReqsStub = ClassesStub.data;
-	var genReqsStub = majorReqsStub;
+	angularFire(GeneralRequirements, $scope, "genReqs");
+	angularFire(MajorRequirements, $scope, "majorReqs");
 
-	processCourseAvailable(majorReqsStub);
+	// processCourseAvailable(majorReqsStub);
 
-	$scope.majorReqs = majorReqsStub;
-	$scope.genReqs = genReqsStub;
+	// $scope.majorReqs = majorReqsStub;
+	// $scope.genReqs = genReqsStub;
 
 	$scope.user = User;
 	$scope.user.schedule = Schedule.getCourses();
@@ -35,7 +37,7 @@ controllers.controller('RequirementsController', ['$scope', 'ClassesStub', 'User
 
 }]);
 
-controllers.controller('ClassListController', ['$scope', '$routeParams', 'ClassesStub', 'User', 'Schedule', function($scope, $routeParams, ClassesStub, User, Schedule){
+controllers.controller('ClassListController', ['$scope', '$routeParams',  'angularFire', 'User', 'Schedule', function($scope, $routeParams, angularFire, User, Schedule){
 	if ($routeParams.searchQuery){
 		$scope.searchQuery = $routeParams.searchQuery;
 	};
@@ -43,7 +45,8 @@ controllers.controller('ClassListController', ['$scope', '$routeParams', 'Classe
 	$scope.user = User;
 	$scope.user.schedule = Schedule.getCourses();
 
-	$scope.classList = ClassesStub.data;
+	var AllClasses = new Firebase("https://team-cinnamon.firebaseio.com/AllClasses");
+	angularFire(AllClasses, $scope, "classList");
 
 	//Data preprocessing for classes
 	processCourseAvailable($scope.classList)
@@ -74,7 +77,7 @@ controllers.controller('ClassListController', ['$scope', '$routeParams', 'Classe
 
 }]);
 
-controllers.controller('CalendarController', ['$scope', 'Schedule', 'ClassesStub', function($scope, Schedule, ClassesStub){
+controllers.controller('CalendarController', ['$scope', 'Schedule', function($scope, Schedule){
 	var sortService = new SortService();
 	var axesDataService = new AxesDataService();
 	var eventsDataService = new EventDataService();
@@ -115,7 +118,7 @@ controllers.controller('CalendarController', ['$scope', 'Schedule', 'ClassesStub
 			colorIndex = (colorIndex + 1)%colors.length;
 			angular.forEach(scheduleElement.course.sections, function(section){
 				var sectionStartEndTimes = convertSectionTimeToMinutes(section)
-				
+
 				section.start = sectionStartEndTimes.start;
 				section.end = sectionStartEndTimes.end;
 				section.height = (section.end - section.start);
@@ -206,12 +209,10 @@ controllers.controller('SearchController', ['$scope', '$location', function($sco
 	};
 }]);
 
-controllers.controller('CourseSidebarController', ['$scope', '$filter', 'Schedule', 'ClassesStub', function($scope, $filter, Schedule, ClassesStub){
+controllers.controller('CourseSidebarController', ['$scope', '$filter', 'angularFire', 'Schedule', function($scope, $filter, angularFire, Schedule, ClassesStub){
 	
-	ClassesStub.then(function(data){
-		$scope.allCourses = data.data;
-		processCourseAvailable($scope.allCourses)
-	});
+	var AllClasses = new Firebase("https://team-cinnamon.firebaseio.com/AllClasses");
+	angularFire(AllClasses, $scope, "allCourses");
 
 	$scope.sidebarAddModel = "";
 
