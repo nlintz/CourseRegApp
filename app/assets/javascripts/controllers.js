@@ -12,11 +12,13 @@ function processCourseAvailable(courses, Schedule){
 };
 
 controllers.controller('RequirementsController', ['$scope', 'angularFire', 'User', 'Schedule', function($scope, angularFire, User, Schedule){
-	var GeneralRequirements = new Firebase("https://team-cinnamon.firebaseio.com/GeneralRequirements");
-	var MajorRequirements = new Firebase("https://team-cinnamon.firebaseio.com/MajorRequirements");
-	//Stubs
-	var genReqsPromise = angularFire(GeneralRequirements, $scope, "genReqs");
-	var majorReqsPromise = angularFire(MajorRequirements, $scope, "majorReqs");
+	var GeneralRequirementsUrl = new Firebase("https://team-cinnamon.firebaseio.com/GeneralRequirements");
+	var MajorRequirementsUrl = new Firebase("https://team-cinnamon.firebaseio.com/MajorRequirements");
+	var ScheduleUrl = new Firebase('https://team-cinnamon.firebaseio.com/Schedule');
+
+	var genReqsPromise = angularFire(GeneralRequirementsUrl, $scope, "genReqs");
+	var majorReqsPromise = angularFire(MajorRequirementsUrl, $scope, "majorReqs");
+	var schedulePromise = angularFire(ScheduleUrl, $scope, "user.schedule");
 	
 	genReqsPromise.then(function(){
 		processCourseAvailable($scope.genReqs, Schedule);
@@ -25,12 +27,15 @@ controllers.controller('RequirementsController', ['$scope', 'angularFire', 'User
 		processCourseAvailable($scope.majorReqs, Schedule);
 	});
 
+	// schedulePromise.then(function(){
+	// 	console.log($scope.schedule);
+	// })
+
 	$scope.user = User;
-	$scope.user.schedule = Schedule.getCourses();
 
 	$scope.addCourseToSchedule = function(course, section){
 		Schedule.addCourse(course, course.sections.indexOf(section), Schedule.getCourses().length);
-		$scope.user.schedule = Schedule.getCourses();
+		// $scope.user.schedule = Schedule.getCourses();
 	};
 
 	$scope.changeCoursePriority = function(index, direction){

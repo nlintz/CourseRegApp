@@ -4,21 +4,15 @@ services.factory('ClassesStub', ['$http', function($http){
 	return $http.get('/jsonData/classesStub.json');
 }]);
 
-services.factory('FirebaseSchedule', ['angularFireCollection', function(angularFireCollection){
-	var url = new Firebase('https://team-cinnamon.firebaseio.com/Schedule');
-	return {
-		getSchedule: function (){
-			var ref = angularFireCollection(url)
-			return ref
-		}
-	};
+services.factory('FirebaseSchedule', ['$http', function($http){
+	return $http({url: 'https://team-cinnamon.firebaseio.com/Schedule.json'});
 }]);
 
 services.service('Schedule', [function(){
 	this.scheduleRef = new Firebase('https://team-cinnamon.firebaseio.com/Schedule');
-	this.scheduleRef.child('allCourses').set([])
+	// this.scheduleRef.set([])
 	this.courses = [];
-	
+
 	this.inSchedule = function(course){
 
 		for (var i=0; i<this.courses.length; i++){
@@ -34,9 +28,7 @@ services.service('Schedule', [function(){
 			var scheduleElement = {course:course, section:String(section), priority:String(priority)};
 			var scheduleElementForFirebase = {course:JSON.stringify(course), section:String(section), priority:String(priority)};
 			scheduleElement.course.inSchedule = true;
-
-			this.courses.push(scheduleElement);
-			this.scheduleRef.child('allCourses').push(scheduleElementForFirebase)
+			this.scheduleRef.push(scheduleElementForFirebase)
 			this.sortCourses();
 		};
 	};
@@ -45,13 +37,14 @@ services.service('Schedule', [function(){
 		this.courses = _.sortBy(this.courses, function(course){return course.priority});
 	}
 
+
 	this.getCourses = function(){
 		return this.courses;
 	};
 
 	this.getCoursesFromDB = function(){
 		var coursesInDB = [];
-		this.scheduleRef.on('child_added', function(snapshot) {
+		this.scheduleRef.once('value', function(snapshot) {
 			angular.forEach(snapshot.val(), function(snapshotData){
 				var scheduleElement = {course:JSON.parse(snapshotData.course), section:parseInt(snapshotData.section, 10), priority:parseInt(snapshotData.priority, 10)};
 				coursesInDB.push(scheduleElement);
