@@ -8,12 +8,15 @@
 			</div>
 		</div>
 		<div class="col-md-11 calendar-events-container">
-			<div class="col-md-2 calendar-column">
-				<p class="day-of-week">M</p>
-				<div ng-repeat="scheduledCourse in user.schedule">
-					<div ng-repeat="section in scheduledCourse.course.sections">
-						<!-- <div class="calendar-event" ng-style="{ height: (section.height) * 40, top: (section.start), width: (section.width * 60), left: (section.column * 30)}">{{class.start}}</div> -->
-						<div class="calendar-event" ng-style="{ height: computeHeight(section), top: (section.start), width: (100), left: (30)}">{{class.start}}</div>
+			<div class="col-md-2 calendar-column" ng-repeat="day in sectionsInCalendar">
+				<p class="day-of-week">{{day.dayCode}}</p>
+				<div class="schedule-column-container">
+					<div ng-repeat="section in day.sections">
+<!-- 						<div class="calendar-event" ng-style="{ height: section.height, top: (section.start * (2/3)), width: (section.width * 60), left: (section.width * section.column * 60)}" ng-class="(section.selectedSection==true) ? 'selected-section' : 'not-selected-section'">
+ -->					<div class="calendar-event" ng-style="styleSection(section)" ng-click="switchSection(section)">
+							<p>{{section.courseName}}</p>
+							<p>Section Number: {{section.sectionNumber}}
+						</div>
 					</div>
 				</div>
 			</div>

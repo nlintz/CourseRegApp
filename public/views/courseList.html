@@ -20,7 +20,7 @@
 							<div class="btn-group" ng-repeat="section in course.sections">
 								<div class="row">
 									<p>Meeting Days:</p>
-									<p>{{section.meetingDays}} {{section.startTime}}-{{section.endTime}}</p>
+									<p>{{section.meetingDays | ArrayToString}}: {{section.startTime}}-{{section.endTime}}</p>
 									<p>Section Number: {{section.sectionNumber}}</p>
 									<p>Number of Students In Class: {{section.studentsRegistered}}/{{section.spotsInClass}}</p>
 				    				<div ng-show="course.available">
@@ -33,10 +33,6 @@
 								    		<button type="button" class="btn btn-danger" ng-click="removeCourseFromSchedule(course)">Drop Class</button>
 							    		</div>
 						    		</div>
-				    				<!-- <div ng-hide="course.available">
-				    					<button type="button" class="btn btn-success" disabled="disabled">Class Not Available</button>
-				    				</div> -->
-
 			    				</div>
 			    				<br>
 			    			</div>

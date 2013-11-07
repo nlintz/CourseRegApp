@@ -121,8 +121,8 @@ function EventDataService(){
 
 	// Method which processes and validates the events
 	this.getEventsData = function(events){
-		var validatedEvents = this.validateEvents(events);
-		var placedEvents = this.placeEvents(validatedEvents);
+		// var validatedEvents = this.validateEvents(events);
+		var placedEvents = this.placeEvents(events);
 		return placedEvents;
 	};
 
@@ -138,7 +138,7 @@ function EventDataService(){
 			this.assignWidths(event, collidingEvents);
 			placedEvents.push(event);
 		};
-		this.assignText(placedEvents);
+		// this.assignText(placedEvents);
 		return placedEvents;
 	};
 

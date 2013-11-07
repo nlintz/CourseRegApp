@@ -12,8 +12,8 @@
 
 .calendar-axes-container {
 	left: 15%;
+	// width: 0% !important;
 	margin-top: 5%;
-
 	.axes-time {
 		height: 40px;
 	}
@@ -26,12 +26,18 @@
 }
 
 .calendar-event {
-	position: relative;
-	border: 1px solid black;
-	margin-top: 25px;
 	position: absolute;
+	p {
+		word-wrap: break-word;
+		font-size: .8em;
+		color: #34495e;
+	}
 }
 
 .day-of-week {
 	text-align: center;
+}
+
+.schedule-column-container {
+	position: relative;
 }

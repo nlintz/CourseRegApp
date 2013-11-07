@@ -8,18 +8,18 @@
 	"studentsRegistered":"10",
 	"available":"true",
 	"sections": [{
-		"meetingDays":"M T",
-		"startTime":"9:00",
-		"endTime":"10:50",
+		"meetingDays":["Monday", "Tuesday"],
+		"startTime":"10:00",
+		"endTime":"11:00",
 		"sectionNumber":"0",
 		"studentsRegistered":"10",
 		"spotsInClass":"30"
 		},
 		{
-		"meetingDays":"M T",
-		"startTime":"9:30",
-		"endTime":"10:50",
-		"sectionNumber":"0",
+		"meetingDays":["Wednesday", "Thursday"],
+		"startTime":"10:30",
+		"endTime":"11:30",
+		"sectionNumber":"1",
 		"studentsRegistered":"10",
 		"spotsInClass":"30"
 		}]
@@ -33,7 +33,7 @@
 	"studentsRegistered":"10",
 	"available":"true",
 	"sections": [{
-		"meetingDays":"M T",
+		"meetingDays":["Monday", "Tuesday"],
 		"startTime":"9:00",
 		"endTime":"10:50",
 		"sectionNumber":"0",
@@ -41,10 +41,10 @@
 		"spotsInClass":"30"
 		},
 		{
-		"meetingDays":"M T",
-		"startTime":"9:00",
-		"endTime":"10:50",
-		"sectionNumber":"0",
+		"meetingDays":["Wednesday", "Thursday"],
+		"startTime":"13:00",
+		"endTime":"14:50",
+		"sectionNumber":"1",
 		"studentsRegistered":"10",
 		"spotsInClass":"30"
 		}]

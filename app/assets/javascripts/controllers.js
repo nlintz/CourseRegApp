@@ -20,7 +20,7 @@ controllers.controller('RequirementsController', ['$scope', 'ClassesStub', 'User
 	$scope.user.schedule = Schedule.getCourses();
 
 	$scope.addCourseToSchedule = function(course, section){
-		Schedule.addCourse(course, section, Schedule.getCourses().length);
+		Schedule.addCourse(course, course.sections.indexOf(section), Schedule.getCourses().length);
 		$scope.user.schedule = Schedule.getCourses();
 	};
 
@@ -49,7 +49,7 @@ controllers.controller('ClassListController', ['$scope', '$routeParams', 'Classe
 	processCourseAvailable($scope.classList)
 
 	$scope.addCourseToSchedule = function(course, section){
-		Schedule.addCourse(course, section, Schedule.getCourses().length);
+		Schedule.addCourse(course, course.sections.indexOf(section), Schedule.getCourses().length);
 		$scope.user.schedule = Schedule.getCourses();
 	};
 
@@ -75,14 +75,14 @@ controllers.controller('ClassListController', ['$scope', '$routeParams', 'Classe
 }]);
 
 controllers.controller('CalendarController', ['$scope', 'Schedule', 'ClassesStub', function($scope, Schedule, ClassesStub){
-	//TODO REFACTOR INTO ANGULAR SERVICES
 	var sortService = new SortService();
 	var axesDataService = new AxesDataService();
 	var eventsDataService = new EventDataService();
 
 	var calendarEvents = [];
 	var dayStart = 9;
-
+	var colors = ["#1abc9c", "#27ae60", "#2980b9", "#8e44ad", "#c0392b", "#f39c12"];
+	var colorIndex = 0;
 	function convertSectionTimeToIntArray(section){
 		return [_.map(section.startTime.split(':'), function(time){return parseInt(time, 10)}),
 		_.map(section.endTime.split(':'), function(time){return parseInt(time, 10)})];
@@ -98,27 +98,94 @@ controllers.controller('CalendarController', ['$scope', 'Schedule', 'ClassesStub
 		return {start:startHour*60 + startTime[1], end:endHour*60 + endTime[1]};
 	};
 
-	ClassesStub.then(function(data){
-		Schedule.addCourse(data.data[0], 1, 1)
-		$scope.mondayClasses = Schedule.getCourses()[0].course.sections
-	});
+	function sectionsInCalendar(){
+		return [{sections:[], dayCode:"M"}, 
+		{sections:[], dayCode:"T"}, 
+		{sections:[], dayCode:"W"}, 
+		{sections:[], dayCode:"Th"}, 
+		{sections:[], dayCode:"F"}]
+	};
+
+	$scope.sectionsInCalendar = new sectionsInCalendar();
 
 	$scope.$watchCollection('user.schedule', function(scheduleElements){
+		$scope.sectionsInCalendar = new sectionsInCalendar();
 		angular.forEach(scheduleElements, function(scheduleElement){
+			scheduleElement.course.color = scheduleElement.course.color ? scheduleElement.course.color : colors[colorIndex];
+			colorIndex = (colorIndex + 1)%colors.length;
 			angular.forEach(scheduleElement.course.sections, function(section){
 				var sectionStartEndTimes = convertSectionTimeToMinutes(section)
 				section.start = sectionStartEndTimes.start;
 				section.end = sectionStartEndTimes.end;
+				section.height = (section.end - section.start);
+				section.courseName = scheduleElement.course.className;
+				section.selectedSection = (scheduleElement.section == section.sectionNumber) ? true : false;
+				section.course = scheduleElement.course;
+				
+				section.color = scheduleElement.course.color;
+
+				if (section.meetingDays.indexOf("Monday") >= 0){
+					$scope.sectionsInCalendar[0].sections.push(section)
+				};
+				if (section.meetingDays.indexOf("Tuesday") >= 0){
+					$scope.sectionsInCalendar[1].sections.push(section)
+				};
+				if (section.meetingDays.indexOf("Wednesday") >= 0){
+					$scope.sectionsInCalendar[2].sections.push(section)
+				};
+				if (section.meetingDays.indexOf("Thursday") >= 0){
+					$scope.sectionsInCalendar[3].sections.push(section)
+				};
+				if (section.meetingDays.indexOf("Friday") >= 0){
+					$scope.sectionsInCalendar[4].sections.push(section)
+				};
+
 			});
 		});
+
+		angular.forEach($scope.sectionsInCalendar, function(day){
+			var sortedCourses = sortService.sortEventsByStartTime(day.sections);
+			var processedData = eventsDataService.getEventsData(sortedCourses);
+		});
 	});
-
 	
+	$scope.switchSection = function(section){
+		var course = section.course;
+		angular.forEach($scope.user.schedule, function(scheduleElement){
+			if (scheduleElement.course == course){
+				scheduleElement.section = section.sectionNumber;
 
-	var stubEvents = [{start:30, end:150}, {start:30, end:200}];
-	var sortedEvents = sortService.sortEventsByStartTime(stubEvents);
-	var eventsData = eventsDataService.getEventsData(sortedEvents);
+				angular.forEach(scheduleElement.course.sections, function(courseSection){
+					courseSection.selectedSection = (courseSection.selectedSection == section) ? true : false;
+				});
+			};
+		});
+		if (!section.selectedSection){
+			section.selectedSection = true;
+		};
+	};
 
+	$scope.styleSection = function(section){
+		var height = section.height;
+		var top = section.start * (2/3);
+		var width = section.width * 60;
+		var left = section.width * section.column * 60;
+		color = section.color;
+		if (section.selectedSection){
+			return {'height': height, 'top': top, 
+			'width': width, 
+			'left': left,
+			'background-color': color}
+		}
+		else {
+			return { 'height': height, 'top': top, 
+			'width': width, 
+			'left': left,
+			'border': '1px solid ' + color}
+		};
+
+	};
+	
 	var axesTimings = axesDataService.axesTimings(9, 18, 1);
 	var axesData = axesDataService.getAxesData(axesTimings);
 
@@ -127,18 +194,6 @@ controllers.controller('CalendarController', ['$scope', 'Schedule', 'ClassesStub
 	$scope.computeHeight = function(courseSection){
 		return (courseSection.end - courseSection.start)/60;
 	};
-
-	$scope.computeWidths = function(courseSections){
-		// var sortedEvents = sortService.sortEventsByStartTime(stubEvents);
-		// var eventsData = eventsDataService.getEventsData(sortedEvents);
-	};
-
-	angular.forEach(eventsData, function(classEvent){
-		classEvent.height = (classEvent.end - classEvent.start)/60;
-	});
-
-	$scope.mondayClasses = eventsData;
-	$scope.tuesdayClasses = eventsData;
 
 }]);
 
@@ -170,7 +225,7 @@ controllers.controller('CourseSidebarController', ['$scope', '$filter', 'Schedul
 	};
 
 	$scope.changeCoursePriority = function(index, direction){
-		Schedule.swapCourses(index, direction)
+		Schedule.swapCourses(index, direction);
 	};
 
 	$scope.removeCourseFromSchedule = function(course){
