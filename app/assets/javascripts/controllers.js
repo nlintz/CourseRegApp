@@ -47,6 +47,9 @@ controllers.controller('ClassListController', ['$scope', '$routeParams',  'angul
 	angularFire(AllClasses, $scope, "classList");
 	//Data preprocessing for classes
 	processCourseAvailable($scope.classList)
+	angular.forEach($scope.classList, function(classa){
+		console.log(classa)
+	})
 
 	$scope.addCourseToSchedule = function(course, section){
 		Schedule.addCourse(course, course.sections.indexOf(section), Schedule.getCourses().length);
