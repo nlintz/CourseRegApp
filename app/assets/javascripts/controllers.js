@@ -115,14 +115,15 @@ controllers.controller('CalendarController', ['$scope', 'Schedule', 'ClassesStub
 			colorIndex = (colorIndex + 1)%colors.length;
 			angular.forEach(scheduleElement.course.sections, function(section){
 				var sectionStartEndTimes = convertSectionTimeToMinutes(section)
+				
 				section.start = sectionStartEndTimes.start;
 				section.end = sectionStartEndTimes.end;
 				section.height = (section.end - section.start);
+				section.color = scheduleElement.course.color;
+				
 				section.courseName = scheduleElement.course.className;
 				section.selectedSection = (scheduleElement.section == section.sectionNumber) ? true : false;
-				section.course = scheduleElement.course;
-				
-				section.color = scheduleElement.course.color;
+				section.courseName = scheduleElement.course.className;
 
 				if (section.meetingDays.indexOf("Monday") >= 0){
 					$scope.sectionsInCalendar[0].sections.push(section)
@@ -150,9 +151,10 @@ controllers.controller('CalendarController', ['$scope', 'Schedule', 'ClassesStub
 	});
 	
 	$scope.switchSection = function(section){
-		var course = section.course;
+		// var course = section.course;
+		// console.log(section)
 		angular.forEach($scope.user.schedule, function(scheduleElement){
-			if (scheduleElement.course == course){
+			if (scheduleElement.course.className == section.courseName){
 				scheduleElement.section = section.sectionNumber;
 
 				angular.forEach(scheduleElement.course.sections, function(courseSection){
