@@ -15,6 +15,9 @@ services.factory('FirebaseSchedule', ['angularFireCollection', function(angularF
 }]);
 
 services.service('Schedule', ['FirebaseSchedule', function(FirebaseSchedule){
+	// this.courses = FirebaseSchedule.getSchedule();
+	this.courses = [];
+
 	this.inSchedule = function(course){
 		for (var i=0; i<this.courses.length; i++){
 			if (this.courses[i].course.className == course.className){
