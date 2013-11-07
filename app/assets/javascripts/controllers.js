@@ -7,8 +7,8 @@ function processCourseAvailable(courses){
 }
 
 controllers.controller('RequirementsController', ['$scope', 'angularFire', 'User', 'Schedule', function($scope, angularFire, User, Schedule){
-	var GeneralRequirements = new Firebase("https://team-cinnamon.firebaseio.com/MajorRequirements");
-	var MajorRequirements = new Firebase("https://team-cinnamon.firebaseio.com/GeneralRequirements");
+	var GeneralRequirements = new Firebase("https://team-cinnamon.firebaseio.com/GeneralRequirements");
+	var MajorRequirements = new Firebase("https://team-cinnamon.firebaseio.com/MajorRequirements");
 	//Stubs
 	angularFire(GeneralRequirements, $scope, "genReqs");
 	angularFire(MajorRequirements, $scope, "majorReqs");
@@ -47,9 +47,6 @@ controllers.controller('ClassListController', ['$scope', '$routeParams',  'angul
 	angularFire(AllClasses, $scope, "classList");
 	//Data preprocessing for classes
 	processCourseAvailable($scope.classList)
-	angular.forEach($scope.classList, function(classa){
-		console.log(classa)
-	})
 
 	$scope.addCourseToSchedule = function(course, section){
 		Schedule.addCourse(course, course.sections.indexOf(section), Schedule.getCourses().length);

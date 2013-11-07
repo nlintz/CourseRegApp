@@ -15,21 +15,16 @@ services.factory('FirebaseSchedule', ['angularFireCollection', function(angularF
 }]);
 
 services.service('Schedule', ['FirebaseSchedule', function(FirebaseSchedule){
-	// this.courses = FirebaseSchedule.getSchedule();
-	this.courses = [];
-
 	this.inSchedule = function(course){
-		angular.forEach(this.courses, function(scheduleElement){
-			if (scheduleElement.course.className == course.className){
-				console.log(scheduleElement.course.className == course.className);
-				return true
+		for (var i=0; i<this.courses.length; i++){
+			if (this.courses[i].course.className == course.className){
+				return true;
 			};
-		});
+		};
 		return false
 	};
 
 	this.addCourse = function(course, section, priority){
-		console.log(this.inSchedule(course))
 		if (this.inSchedule(course) == false){
 			var scheduleElement = {course:course, section:section, priority:priority};
 			scheduleElement.course.inSchedule = true;
