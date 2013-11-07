@@ -7,8 +7,8 @@ function processCourseAvailable(courses){
 }
 
 controllers.controller('RequirementsController', ['$scope', 'angularFire', 'User', 'Schedule', function($scope, angularFire, User, Schedule){
-	var GeneralRequirements = new Firebase("https://team-cinnamon.firebaseio.com/AllClasses");
-	var MajorRequirements = new Firebase("https://team-cinnamon.firebaseio.com/AllClasses");
+	var GeneralRequirements = new Firebase("https://team-cinnamon.firebaseio.com/MajorRequirements");
+	var MajorRequirements = new Firebase("https://team-cinnamon.firebaseio.com/GeneralRequirements");
 	//Stubs
 	angularFire(GeneralRequirements, $scope, "genReqs");
 	angularFire(MajorRequirements, $scope, "majorReqs");
