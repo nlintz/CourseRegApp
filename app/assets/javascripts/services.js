@@ -14,11 +14,13 @@ services.factory('FirebaseSchedule', ['angularFireCollection', function(angularF
 	};
 }]);
 
-services.service('Schedule', ['FirebaseSchedule', function(FirebaseSchedule){
-	// this.courses = FirebaseSchedule.getSchedule();
+services.service('Schedule', [function(){
+	this.scheduleRef = new Firebase('https://team-cinnamon.firebaseio.com/Schedule');
+	this.scheduleRef.child('allCourses').set([])
 	this.courses = [];
-
+	
 	this.inSchedule = function(course){
+
 		for (var i=0; i<this.courses.length; i++){
 			if (this.courses[i].course.className == course.className){
 				return true;
@@ -29,9 +31,12 @@ services.service('Schedule', ['FirebaseSchedule', function(FirebaseSchedule){
 
 	this.addCourse = function(course, section, priority){
 		if (this.inSchedule(course) == false){
-			var scheduleElement = {course:course, section:section, priority:priority};
+			var scheduleElement = {course:course, section:String(section), priority:String(priority)};
+			var scheduleElementForFirebase = {course:JSON.stringify(course), section:String(section), priority:String(priority)};
 			scheduleElement.course.inSchedule = true;
+
 			this.courses.push(scheduleElement);
+			this.scheduleRef.child('allCourses').push(scheduleElementForFirebase)
 			this.sortCourses();
 		};
 	};
@@ -42,6 +47,17 @@ services.service('Schedule', ['FirebaseSchedule', function(FirebaseSchedule){
 
 	this.getCourses = function(){
 		return this.courses;
+	};
+
+	this.getCoursesFromDB = function(){
+		var coursesInDB = [];
+		this.scheduleRef.on('child_added', function(snapshot) {
+			angular.forEach(snapshot.val(), function(snapshotData){
+				var scheduleElement = {course:JSON.parse(snapshotData.course), section:parseInt(snapshotData.section, 10), priority:parseInt(snapshotData.priority, 10)};
+				coursesInDB.push(scheduleElement);
+			});
+			return coursesInDB;
+		});
 	};
 
 	this.reprioritizeCourses = function(){
