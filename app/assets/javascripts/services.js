@@ -4,8 +4,20 @@ services.factory('ClassesStub', ['$http', function($http){
 	return $http.get('/jsonData/classesStub.json');
 }]);
 
-services.service('Schedule', [function(){
+services.factory('FirebaseSchedule', ['angularFireCollection', function(angularFireCollection){
+	var url = new Firebase('https://team-cinnamon.firebaseio.com/Schedule');
+	return {
+		getSchedule: function (){
+			var ref = angularFireCollection(url)
+			return ref
+		}
+	};
+}]);
+
+services.service('Schedule', ['FirebaseSchedule', function(FirebaseSchedule){
+	// this.courses = FirebaseSchedule.getSchedule();
 	this.courses = [];
+
 	this.addCourse = function(course, section, priority){
 		var scheduleElement = {course:course, section:section, priority:priority};
 		scheduleElement.course.inSchedule = true;

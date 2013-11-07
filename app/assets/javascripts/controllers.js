@@ -7,16 +7,14 @@ function processCourseAvailable(courses){
 }
 
 controllers.controller('RequirementsController', ['$scope', 'angularFire', 'User', 'Schedule', function($scope, angularFire, User, Schedule){
-	var GeneralRequirements = new Firebase("https://team-cinnamon.firebaseio.com/GeneralRequirements");
-	var MajorRequirements = new Firebase("https://team-cinnamon.firebaseio.com/MajorRequirements");
+	var GeneralRequirements = new Firebase("https://team-cinnamon.firebaseio.com/AllClasses");
+	var MajorRequirements = new Firebase("https://team-cinnamon.firebaseio.com/AllClasses");
 	//Stubs
 	angularFire(GeneralRequirements, $scope, "genReqs");
 	angularFire(MajorRequirements, $scope, "majorReqs");
-
-	// processCourseAvailable(majorReqsStub);
-
-	// $scope.majorReqs = majorReqsStub;
-	// $scope.genReqs = genReqsStub;
+	
+	processCourseAvailable($scope.genReqs);
+	processCourseAvailable($scope.majorReqs);
 
 	$scope.user = User;
 	$scope.user.schedule = Schedule.getCourses();
@@ -47,7 +45,6 @@ controllers.controller('ClassListController', ['$scope', '$routeParams',  'angul
 
 	var AllClasses = new Firebase("https://team-cinnamon.firebaseio.com/AllClasses");
 	angularFire(AllClasses, $scope, "classList");
-
 	//Data preprocessing for classes
 	processCourseAvailable($scope.classList)
 
@@ -210,16 +207,18 @@ controllers.controller('SearchController', ['$scope', '$location', function($sco
 }]);
 
 controllers.controller('CourseSidebarController', ['$scope', '$filter', 'angularFire', 'Schedule', function($scope, $filter, angularFire, Schedule, ClassesStub){
-	
 	var AllClasses = new Firebase("https://team-cinnamon.firebaseio.com/AllClasses");
 	angularFire(AllClasses, $scope, "allCourses");
+	processCourseAvailable($scope.allCourses);
 
 	$scope.sidebarAddModel = "";
 
 	$scope.addCourseFromSidebar = function(course){
 		if ($scope.sidebarAddModel){
 			var courseToAdd = $filter('filter')($scope.allCourses, $scope.sidebarAddModel)[0];
-			if (courseToAdd.available && !courseToAdd.inSchedule){
+
+			if ((courseToAdd.available == "true") && !courseToAdd.inSchedule){
+				
 				Schedule.addCourse(courseToAdd, 0, Schedule.getCourses().length);
 				$scope.sidebarAddModel = "";
 				}
