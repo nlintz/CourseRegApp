@@ -3,11 +3,9 @@ var controllers = angular.module('Controllers', []);
 function processCourseAvailable(courses, Schedule){
 	angular.forEach(courses, function(course){
 		course.available = (course.available == 'true' || course.available == true) ? true : false;
-		// if (course.inSchedule){
-		// 	course.inSchedule = true;
-		// 	console.log(course.inSchedule)
-		// 	// Schedule.addCourse(course)
-		// }
+		if (Schedule.inSchedule(course)){
+			course.inSchedule = true;
+		}
 	});
 };
 
@@ -18,7 +16,7 @@ controllers.controller('RequirementsController', ['$scope', 'angularFire', 'User
 
 	var genReqsPromise = angularFire(GeneralRequirementsUrl, $scope, "genReqs");
 	var majorReqsPromise = angularFire(MajorRequirementsUrl, $scope, "majorReqs");
-	var schedulePromise = angularFire(ScheduleUrl, $scope, "user.schedule");
+	var schedulePromise = angularFire(ScheduleUrl, $scope, "firebaseSchedule");
 	
 	genReqsPromise.then(function(){
 		processCourseAvailable($scope.genReqs, Schedule);
@@ -27,15 +25,20 @@ controllers.controller('RequirementsController', ['$scope', 'angularFire', 'User
 		processCourseAvailable($scope.majorReqs, Schedule);
 	});
 
-	// schedulePromise.then(function(){
-	// 	console.log($scope.schedule);
-	// })
-
 	$scope.user = User;
+
+	schedulePromise.then(function(){
+		Schedule.setCourses($scope.firebaseSchedule);
+		$scope.user.schedule = Schedule.getCourses();
+	});
+
+	$scope.$watchCollection('firebaseSchedule', function(scheduleElements){
+		Schedule.setCourses($scope.firebaseSchedule);
+		$scope.user.schedule = Schedule.getCourses();
+	});
 
 	$scope.addCourseToSchedule = function(course, section){
 		Schedule.addCourse(course, course.sections.indexOf(section), Schedule.getCourses().length);
-		// $scope.user.schedule = Schedule.getCourses();
 	};
 
 	$scope.changeCoursePriority = function(index, direction){
@@ -44,9 +47,16 @@ controllers.controller('RequirementsController', ['$scope', 'angularFire', 'User
 
 	$scope.removeCourseFromSchedule = function(course){
 		Schedule.removeCourse(course);
-		$scope.user.schedule = Schedule.getCourses();
 	};
 
+	$scope.courseInSchedule = function(course){
+		if (Schedule.inSchedule(course)){
+			return true;
+		}
+		else {
+			return false;
+		};
+	};
 }]);
 
 controllers.controller('ClassListController', ['$scope', '$routeParams',  'angularFire', 'User', 'Schedule', function($scope, $routeParams, angularFire, User, Schedule){
@@ -54,15 +64,27 @@ controllers.controller('ClassListController', ['$scope', '$routeParams',  'angul
 		$scope.searchQuery = $routeParams.searchQuery;
 	};
 	
-	$scope.user = User;
-	$scope.user.schedule = Schedule.getCourses();
-
 	var AllClasses = new Firebase("https://team-cinnamon.firebaseio.com/AllClasses");
+	var ScheduleUrl = new Firebase('https://team-cinnamon.firebaseio.com/Schedule');
+
 	var AllClassesPromise = angularFire(AllClasses, $scope, "classList");
+	var schedulePromise = angularFire(ScheduleUrl, $scope, "firebaseSchedule");
 	
 	//Data preprocessing for classes
 	AllClassesPromise.then(function(){
 		processCourseAvailable($scope.classList, Schedule);
+	});
+
+	$scope.user = User;
+
+	schedulePromise.then(function(){
+		Schedule.setCourses($scope.firebaseSchedule);
+		$scope.user.schedule = Schedule.getCourses();
+	});
+
+	$scope.$watchCollection('firebaseSchedule', function(scheduleElements){
+		Schedule.setCourses($scope.firebaseSchedule);
+		$scope.user.schedule = Schedule.getCourses();
 	});
 
 	$scope.addCourseToSchedule = function(course, section){
@@ -71,14 +93,14 @@ controllers.controller('ClassListController', ['$scope', '$routeParams',  'angul
 	};
 
 	//TODO refactor into attribute of classes
-	function courseInSchedule(course){
-		angular.forEach($scope.user.schedule, function(scheduleElement){
-			if (scheduleElement.course == course){
-				return true;
-			};
-		});
-		return false;
-	};
+	// function courseInSchedule(course){
+	// 	angular.forEach($scope.user.schedule, function(scheduleElement){
+	// 		if (scheduleElement.course == course){
+	// 			return true;
+	// 		};
+	// 	});
+	// 	return false;
+	// };
 
 	$scope.sectionAvailable = function(section){
 		return section.available ? true : false;
@@ -168,8 +190,6 @@ controllers.controller('CalendarController', ['$scope', 'Schedule', function($sc
 	});
 	
 	$scope.switchSection = function(section){
-		// var course = section.course;
-		// console.log(section)
 		angular.forEach($scope.user.schedule, function(scheduleElement){
 			if (scheduleElement.course.className == section.courseName){
 				scheduleElement.section = section.sectionNumber;

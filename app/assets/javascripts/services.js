@@ -10,11 +10,21 @@ services.factory('FirebaseSchedule', ['$http', function($http){
 
 services.service('Schedule', [function(){
 	this.scheduleRef = new Firebase('https://team-cinnamon.firebaseio.com/Schedule');
-	// this.scheduleRef.set([])
 	this.courses = [];
 
-	this.inSchedule = function(course){
+	this.setCourses = function(courses){
+		var schedule = [];
+		angular.forEach(courses, function(course){
+			schedule.push({course: JSON.parse(course.course), section: parseInt(course.section, 10), priority: parseInt(course.section, 10)});
+		});
+		this.courses = schedule;
+	}
 
+	this.getCourses = function(courses){
+		return this.courses;
+	}
+
+	this.inSchedule = function(course){
 		for (var i=0; i<this.courses.length; i++){
 			if (this.courses[i].course.className == course.className){
 				return true;
@@ -37,22 +47,6 @@ services.service('Schedule', [function(){
 		this.courses = _.sortBy(this.courses, function(course){return course.priority});
 	}
 
-
-	this.getCourses = function(){
-		return this.courses;
-	};
-
-	this.getCoursesFromDB = function(){
-		var coursesInDB = [];
-		this.scheduleRef.once('value', function(snapshot) {
-			angular.forEach(snapshot.val(), function(snapshotData){
-				var scheduleElement = {course:JSON.parse(snapshotData.course), section:parseInt(snapshotData.section, 10), priority:parseInt(snapshotData.priority, 10)};
-				coursesInDB.push(scheduleElement);
-			});
-			return coursesInDB;
-		});
-	};
-
 	this.reprioritizeCourses = function(){
 		//When the courses array changes, you need to reassign priorities 
 		//otherwise, there will be gaps e.g. 0, 2
@@ -63,7 +57,6 @@ services.service('Schedule', [function(){
 
 	this.removeCourse = function(course){
 		var indexToRemove = -1;
-
 		course.inSchedule = false;
 		angular.forEach(this.courses, function(courseInSchedule, index){
 			if (courseInSchedule.course == course){
@@ -72,6 +65,15 @@ services.service('Schedule', [function(){
 		});
 		this.courses.splice(indexToRemove, 1);
 		this.reprioritizeCourses();
+		this.scheduleRef.set(this.formatCoursesForFirebase(this.courses));
+	};
+
+	this.formatCoursesForFirebase = function(courses){
+		var formattedCourses = [];
+		angular.forEach(courses, function(course){
+			formattedCourses.push({course:JSON.stringify(course.course), section:String(course.section), priority:String(course.priority)});
+		});
+		return formattedCourses;
 	};
 
 	this.swapCourses = function(index, direction){
