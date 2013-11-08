@@ -25,6 +25,31 @@
 		}]
 	},
 	{
+	"className": "Biology",
+	"description":"Good class to learn about bio",
+	"tags":["tagA","tagB","tagC"],
+	"prerequisites":["None"],
+	"professor":"Joanne Pratt",
+	"studentsRegistered":"10",
+	"available":"true",
+	"sections": [{
+		"meetingDays":["Monday", "Tuesday"],
+		"startTime":"10:00",
+		"endTime":"11:00",
+		"sectionNumber":"0",
+		"studentsRegistered":"10",
+		"spotsInClass":"30"
+		},
+		{
+		"meetingDays":["Wednesday", "Thursday"],
+		"startTime":"10:30",
+		"endTime":"11:30",
+		"sectionNumber":"1",
+		"studentsRegistered":"10",
+		"spotsInClass":"30"
+		}]
+	},
+	{
 	"className": "Random Class",
 	"description":"lorem ipsum",
 	"tags":["tagA","tagB","tagC"],

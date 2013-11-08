@@ -59,13 +59,13 @@ services.service('Schedule', [function(){
 		var indexToRemove = -1;
 		course.inSchedule = false;
 		angular.forEach(this.courses, function(courseInSchedule, index){
-			if (courseInSchedule.course == course){
+			if (courseInSchedule.course.className == course.className){
 				indexToRemove = index;
 			};
 		});
 		this.courses.splice(indexToRemove, 1);
-		this.reprioritizeCourses();
 		this.scheduleRef.set(this.formatCoursesForFirebase(this.courses));
+		this.reprioritizeCourses();
 	};
 
 	this.formatCoursesForFirebase = function(courses){
