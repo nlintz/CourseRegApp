@@ -15,7 +15,7 @@ services.service('Schedule', [function(){
 	this.setCourses = function(courses){
 		var schedule = [];
 		angular.forEach(courses, function(course){
-			schedule.push({course: JSON.parse(course.course), section: parseInt(course.section, 10), priority: parseInt(course.section, 10)});
+			schedule.push({course: JSON.parse(course.course), section: parseInt(course.section, 10), priority: parseInt(course.priority, 10)});
 		});
 		this.courses = schedule;
 	}
