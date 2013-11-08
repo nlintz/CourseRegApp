@@ -3,9 +3,6 @@ var controllers = angular.module('Controllers', []);
 function processCourseAvailable(courses, Schedule){
 	angular.forEach(courses, function(course){
 		course.available = (course.available == 'true' || course.available == true) ? true : false;
-		if (Schedule.inSchedule(course)){
-			course.inSchedule = true;
-		}
 	});
 };
 
@@ -92,15 +89,15 @@ controllers.controller('ClassListController', ['$scope', '$routeParams',  'angul
 		$scope.user.schedule = Schedule.getCourses();
 	};
 
-	//TODO refactor into attribute of classes
-	// function courseInSchedule(course){
-	// 	angular.forEach($scope.user.schedule, function(scheduleElement){
-	// 		if (scheduleElement.course == course){
-	// 			return true;
-	// 		};
-	// 	});
-	// 	return false;
-	// };
+	$scope.courseInSchedule = function(course){
+		if (Schedule.inSchedule(course)){
+			return true;
+		}
+		else {
+			return false;
+		};
+	};
+
 
 	$scope.sectionAvailable = function(section){
 		return section.available ? true : false;

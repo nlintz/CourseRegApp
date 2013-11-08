@@ -24,11 +24,11 @@
 									<p>Section Number: {{section.sectionNumber}}</p>
 									<p>Number of Students In Class: {{section.studentsRegistered}}/{{section.spotsInClass}}</p>
 				    				<div ng-show="course.available">
-				    					<div ng-show="!course.inSchedule">
+				    					<div ng-hide="courseInSchedule(course)">
 						    				<button type="button" class="btn btn-success" ng-click="addCourseToSchedule(course, section)">Add Class</button>
 						    				<button type="button" class="btn btn-danger" disabled="disabled">Drop Class</button>
 					    				</div>
-					    				<div ng-show="course.inSchedule">
+					    				<div ng-show="courseInSchedule(course)">
 						    				<button type="button" class="btn btn-success" disabled="disabled">Add Class</button>
 								    		<button type="button" class="btn btn-danger" ng-click="removeCourseFromSchedule(course)">Drop Class</button>
 							    		</div>
