@@ -5,24 +5,28 @@ directives.directive('learnMoreModal', function(){
 		restrict: 'A',
 
 		scope: {
-			course: '=course',
-			schedule: '=schedule'
+			modalCourse: '=modalCourse',
+			schedule: '=schedule',
 		},
 
 		templateUrl: "/partials/moreInfoModal.html",
 
 		link: function (scope, elem, attrs) {
-
         	scope.open = function(){
-        		$('#moreInfoModal').modal('toggle');
+        		$('#' + scope.formatId(scope.modalCourse.className)).modal('toggle');
         	}
 
         	scope.close = function(){
-        		$('#moreInfoModal').modal('toggle');
+        		$('#' + scope.formatId(scope.modalCourse.className)).modal('toggle');
         	};
 
         	scope.addCourseToSchedule = function(course, section){
 				scope.schedule.addCourse(course, course.sections.indexOf(section), scope.schedule.getCourses().length);
+        	};
+
+        	scope.formatId = function(className){
+        		// console.log(className)
+        		return className.split(" ").join("");
         	};
       	}
 	};

@@ -1,31 +1,31 @@
 <a ng-click="open()" class="learn-more">learn more</a>
-<div class="modal fade" id="moreInfoModal">
+<div class="modal fade" id={{formatId(modalCourse.className)}}>
   <div class="modal-dialog more-info">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" aria-hidden="true" ng-click="close()">&times;</button>
-        <h4 class="modal-title">{{course.className}}</h4>
-        <p>{{course.professor}}</p>
+        <h4 class="modal-title">{{modalCourse.className}}</h4>
+        <p>{{modalCourse.professor}}</p>
       </div>
       <div class="modal-body">
         <div class="row">
           <div class="col-md-12">
-            <p>{{course.description}}</p>
+            <p>{{modalCourse.description}}</p>
           </div>
         </div>
         <hr>
         <div class="row">
-          <div class="col-md-4" ng-repeat="section in course.sections">
-            <p>Section {{parseInt(section.sectionNumber, 10) + 1}}</p>
+          <div class="col-md-4" ng-repeat="section in modalCourse.sections">
+            <p>Section {{section.sectionNumber}}</p>
             <p>{{section.meetingDays | ArrayToString}}: {{section.startTime}}-{{section.endTime}}</p>
-            <div ng-show="course.available">
-              <div ng-hide="schedule.inSchedule(course)">
-                <button type="button" class="btn btn-success" ng-click="addCourseToSchedule(course, section)">Add Class</button>
+            <div ng-show="modalCourse.available">
+              <div ng-hide="schedule.inSchedule(modalCourse)">
+                <button type="button" class="btn btn-success" ng-click="addCourseToSchedule(modalCourse, section)">Add Class</button>
                 <button type="button" class="btn btn-danger" disabled="disabled">Drop Class</button>
               </div>
-              <div ng-show="schedule.inSchedule(course)">
+              <div ng-show="schedule.inSchedule(modalCourse)">
                 <button type="button" class="btn btn-success" disabled="disabled">Add Class</button>
-                <button type="button" class="btn btn-danger" ng-click="schedule.removeCourse(course)">Drop Class</button>
+                <button type="button" class="btn btn-danger" ng-click="schedule.removeCourse(modalCourse)">Drop Class</button>
               </div>
             </div>
           </div>
