@@ -8,13 +8,14 @@
 		<div class="row" ng-repeat="course in classList | filter:searchQuery">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title" learn-more-modal course="course"></h3>
+					<h3 class="panel-title">{{course.className}}</h3>
 					<p>{{course.professor}}</p>
 				</div>
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-md-6 col-sm-6 col-xs-6">
 							<p>{{course.description}}</p>
+							<p learn-more-modal course="course"></p>
 						</div>
 						<div class="col-md-6 col-sm-6 col-xs-6">
 							<div class="btn-group" ng-repeat="section in course.sections">
