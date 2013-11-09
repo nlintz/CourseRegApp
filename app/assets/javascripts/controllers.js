@@ -269,3 +269,49 @@ controllers.controller('CourseSidebarController', ['$scope', '$filter', 'angular
 		$scope.user.schedule = Schedule.getCourses();
 	};
 }]);
+
+controllers.controller('AdminController', ['$scope', '$log', 'AdminService', function($scope, $log, AdminService){
+
+	$scope.newCourse = {
+	"className": "",
+	"description":[],
+	"prerequisites":[],
+	"professor":"",
+	"studentsRegistered":"",
+	"available":"true",
+	"sections": [1]
+	};
+
+	$scope.courseModel=[{courseAttribute: "className", inputType:"text"}, 
+	{courseAttribute: "description", inputType:"textArea"}, 
+	{courseAttribute: "tags", inputType:"text"}, 
+	{courseAttribute: "prerequisites", inputType:"array"}, 
+	{courseAttribute: "professor", inputType:"text"}, 
+	{courseAttribute: "studentsRegistered", inputType:"text"}, 
+	{courseAttribute: "available", inputType:"boolean"}, 
+	{courseAttribute: "sections", inputType:"array"}
+	]
+
+	$scope.sectionModel = [{sectionAttribute: "meetingDays", data:[]},
+		{sectionAttribute: "startTime", data:""},
+		{sectionAttribute: "endTime", data:""},
+		{sectionAttribute: "sectionNumber", data:""},
+		{sectionAttribute: "studentsRegistered", data:""},
+		{sectionAttribute: "spotsInClass", data:""}];
+
+	$scope.addSection = function(sectionModel){
+		var section={}
+		angular.forEach(sectionModel, function(attribute){
+			section[attribute.sectionAttribute] = attribute.data
+		});
+		$scope.newCourse["sections"].push(section);
+		$log.info($scope.newCourse)
+	};
+
+	$scope.click = function(section, $){
+		// $scope.addSection(section)
+
+
+	}
+
+}]);

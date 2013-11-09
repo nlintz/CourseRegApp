@@ -8,6 +8,17 @@ services.factory('FirebaseSchedule', ['$http', function($http){
 	return $http({url: 'https://team-cinnamon.firebaseio.com/Schedule.json'});
 }]);
 
+services.service('AdminService', [function(){
+	var majorCoursesRef = new Firebase("https://team-cinnamon.firebaseio.com/MajorRequirements");
+	var genRequirementsRef = new Firebase("https://team-cinnamon.firebaseio.com/GeneralRequirements");
+	var allClassesRef = new Firebase("https://team-cinnamon.firebaseio.com/AllClasses");
+	
+	this.addCourse = function(collection, course){
+		var scheduleElementForFirebase = {course:JSON.stringify(course), section:String(section), priority:String(priority)};
+		majorCoursesRef.push(scheduleElementForFirebase);
+	};
+}])
+
 services.service('Schedule', [function(){
 	this.scheduleRef = new Firebase('https://team-cinnamon.firebaseio.com/Schedule');
 	this.courses = [];
