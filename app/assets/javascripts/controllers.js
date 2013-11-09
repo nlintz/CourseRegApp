@@ -270,48 +270,113 @@ controllers.controller('CourseSidebarController', ['$scope', '$filter', 'angular
 	};
 }]);
 
-controllers.controller('AdminController', ['$scope', '$log', 'AdminService', function($scope, $log, AdminService){
+controllers.controller('AdminController', ['$scope', '$log', 'angularFire' ,'AdminService', function($scope, $log, angularFire, AdminService){
+	var allClassesRef = new Firebase("https://team-cinnamon.firebaseio.com/AllClasses");
+	var genReqsRef = new Firebase("https://team-cinnamon.firebaseio.com/GeneralRequirements");
+	var majorReqsRef = new Firebase("https://team-cinnamon.firebaseio.com/MajorRequirements");
+	
+	var allClassesPromise = angularFire(allClassesRef, $scope, 'allCourses');
+	angularFire(genReqsRef, $scope, 'genReqs');
+	angularFire(majorReqsRef, $scope, 'majorReqs');
+
+	allClassesPromise.then(function(){
+		$scope.courseCollection = $scope.allCourses;
+	})
+
+	var newCourseModel = {
+	"className": "",
+	"description":"",
+	"prerequisites":[""],
+	"professor":"",
+	"available":"true",
+	"sections": [""]
+	};
 
 	$scope.newCourse = {
 	"className": "",
-	"description":[],
-	"prerequisites":[],
+	"description":"",
+	"prerequisites":[""],
 	"professor":"",
-	"studentsRegistered":"",
-	"available":"true",
-	"sections": [1]
+	"available":true,
+	"sections": [{
+		"meetingDays":[""],
+		"startTime":"",
+		"endTime":"",
+		"sectionNumber":"",
+		"studentsRegistered":"",
+		"spotsInClass":""
+		}]
 	};
 
-	$scope.courseModel=[{courseAttribute: "className", inputType:"text"}, 
-	{courseAttribute: "description", inputType:"textArea"}, 
-	{courseAttribute: "tags", inputType:"text"}, 
-	{courseAttribute: "prerequisites", inputType:"array"}, 
-	{courseAttribute: "professor", inputType:"text"}, 
-	{courseAttribute: "studentsRegistered", inputType:"text"}, 
-	{courseAttribute: "available", inputType:"boolean"}, 
-	{courseAttribute: "sections", inputType:"array"}
-	]
+	$scope.$watchCollection('courseCollection', function(collectionElement){
+		if (!$scope.courseCollection){
+			$scope.courseCollection = [];
+			$scope.addCourse();
+		}
+	});
 
-	$scope.sectionModel = [{sectionAttribute: "meetingDays", data:[]},
+	$scope.sectionModel = [{sectionAttribute: "meetingDays", data:""},
 		{sectionAttribute: "startTime", data:""},
 		{sectionAttribute: "endTime", data:""},
 		{sectionAttribute: "sectionNumber", data:""},
 		{sectionAttribute: "studentsRegistered", data:""},
 		{sectionAttribute: "spotsInClass", data:""}];
 
-	$scope.addSection = function(sectionModel){
+	$scope.addSection = function(course){
 		var section={}
-		angular.forEach(sectionModel, function(attribute){
+		if (!course.sections){
+			course.sections = [];
+		}
+		angular.forEach($scope.sectionModel, function(attribute){
 			section[attribute.sectionAttribute] = attribute.data
+			if (attribute.sectionAttribute == "sectionNumber"){
+				section[attribute.sectionAttribute] = course.sections.length;
+			};
 		});
-		$scope.newCourse["sections"].push(section);
-		$log.info($scope.newCourse)
+		course.sections.push(section);
 	};
 
-	$scope.click = function(section, $){
-		// $scope.addSection(section)
+	$scope.deleteCourse = function(course){
+		angular.forEach($scope.courseCollection, function(courseInCollection, index){
+			if (courseInCollection === course){
+				$scope.courseCollection.splice(index, 1)
+			};
+		});
+	};
 
+	$scope.deleteSection = function(course, section){
+		angular.forEach(course.sections, function(sectionInCourse, index){
+			if (sectionInCourse === section){
+				course.sections.splice(index, 1);
+			};
+		});
+	};
 
+	$scope.addCourse = function(){
+		$scope.courseCollection.push($scope.newCourse);
+		$scope.newCourse = newCourseModel;
 	}
 
+	$scope.typeof = function(object){
+		return typeof(object)
+	};
+
+	$scope.toggleAvailable = function(course){
+		// console.log(typeof(course.available))
+		course.available = !course.available;
+	}
+
+	$scope.switchDB = function(db){
+		if (db == 'allClasses'){
+			$scope.courseCollection = $scope.allCourses;
+		}
+
+		if (db == 'majorReqs'){
+			$scope.courseCollection = $scope.majorReqs;
+		}
+
+		if (db == 'generalReqs'){
+			$scope.courseCollection = $scope.genReqs;
+		}
+	}
 }]);

@@ -3,55 +3,71 @@
 	<div class="col-md-12 col-sm-3 col-xs-3">
 		<div class="row">
 			<div class="col-md-12">
-				<div class="container">
-					<h1>Add Course</h1>
+				<br>
+				<br>
+				<div class="row container">
+					<div class="col-md-12">
+						<div class="btn-group">
+						  <button type="button" class="btn btn-default" ng-class="{active: courseCollection == allCourses}" ng-click="switchDB('allClasses')">All Classes</button>
+						  <!-- <button type="button" class="btn btn-default" ng-class="{active: courseCollection == majorReqs}" ng-click="switchDB('majorReqs')">Major Requirements</button> -->
+						  <button type="button" class="btn btn-default" ng-class="{active: courseCollection == genReqs}" ng-click="switchDB('generalReqs')">General Requirements</button>
+						  <button type="button" class="btn btn-default" ng-class="{active: courseCollection == majorReqs}" ng-click="switchDB('majorReqs')">Major Requirements</button>
+						</div>
+					</div>
 				</div>
+				<hr>
 				<div class="admin-form">
-					<form role="form" class="" ng-click="click()">
+					<!-- <form role="form" class="" ng-click="click()"> -->
+						<button href="#" class="btn btn-success btn-lg pull-left" ng-click="addCourse()">Add Course</button>
 						<div class="row">
 							<div class="col-md-8">
-								<div class="row">
-									<div class="col-md-6" ng-repeat="course in courseModel">
+								<div class="panel panel-default" ng-repeat="course in courseCollection">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h3 class="panel-title">{{course.className}}</h3>
+											<!-- <div class="btn-group pull-right"> -->
+											    <button href="#" class="btn btn-danger btn-lg pull-right" ng-click="deleteCourse(course)">Delete Course</button>
+										    <!-- </div> -->
+										</div>
+										<div class="panel-body">
+											<div ng-repeat="(key, value) in course track by $index">
+										    	<div ng-show=' typeof(value) == "string" && key != "available"'>
+											    	<label for={{key}} class="attribute-label"> <b>{{key}}</b></label>
+													<input type="text" ng-model="course[key]" class="form-control" id={{key}} placeholder={{key}}>
+												</div>
 
-					  					<div class="form-group" ng-show='course.inputType == "text"'>
-									    	<label for={{course["courseAttribute"]}} class="attribute-label">Course Attribute: <b>{{course["courseAttribute"]}}</b></label>
-									    	<input type="text" ng-model='newCourse[course["courseAttribute"]]' class="form-control" id={{course["courseAttribute"]}} placeholder={{course["courseAttribute"]}}>
-									  	</div>
+												<div ng-show=' key == "available" '>
+											    	<label class="attribute-label"> <b>{{key}}</b></label>
+													<input type="checkbox" ng-model="course.available" ng-true-value="true" ng-false-value="false" class="form-control" placeholder={{key}}>
+												</div>
+											</div>
+											<div class="container">
+												<h3>Sections</h3>
+													<button class="btn btn-primary btn-lg" ng-click="addSection(course)">Add New Section</button>
+												<div ng-repeat="section in course.sections">
+													<h3>Section: {{section.sectionNumber}}</h3>
+												    <button href="#" class="btn btn-warning btn-md pull-right" ng-click="deleteSection(course, section)">Delete Section</button>
 
-									  	<div class="form-group" ng-show='course.inputType == "textArea"'>
-									    	<label for={{course["courseAttribute"]}} class="attribute-label">Course Attribute: <b>{{course["courseAttribute"]}}</b></label>
-									    	<textarea ng-model='newCourse[course["courseAttribute"]]' class="form-control" id={{course["courseAttribute"]}} placeholder={{course["courseAttribute"]}}></textarea>
-									  	</div>
-
-					  					<div class="form-group" ng-show='course.inputType == "array"'>
-
-									    	<div ng-show='course.courseAttribute == "prerequisites"'>
-									    		<label for={{course["courseAttribute"]}} class="attribute-label">Course Attribute: <b>{{course["courseAttribute"]}}</b></label>
-										    	<input type="email" class="form-control" id={{course["courseAttribute"]}} placeholder={{course["courseAttribute"]}}>
-									    	</div>
-									  	</div>
-
-					  					<div class="form-group" ng-show='course.inputType == "boolean"'>
-									    	<label for={{course["courseAttribute"]}} class="attribute-label">Course Attribute: <b>{{course["courseAttribute"]}}</b></label>
-									    	<input type="checkbox" ng-model='newCourse[course["courseAttribute"]]' ng-true-value="true" ng-false-value="false" class="form-control" id={{course["courseAttribute"]}}>
-									  	</div>
+													<div ng-repeat="(key, value) in section track by $index">
+														<div ng-hide='key == "meetingDays"'>
+													    	<label class="attribute-label"> <b>{{key}}</b></label>
+															<input ng-model="section[key]" type="text" class="form-control" placeholder={{key}}>
+														</div>
+														<div ng-show='key == "meetingDays"'>
+													    	<label class="attribute-label"> <b>{{key}}</b></label>
+															<input ng-list ng-model="section[key]" type="text" class="form-control" placeholder={{key}}>
+														</div>
+													</div>
+													<hr>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
-							<div class="col-md-4">
-								<div class="row">
-						    		<div class="col-md-12" ng-repeat="section in newCourse.sections">
-						    			<div ng-repeat="sectionAttribute in sectionModel">
-									    	<label class="attribute-label">Section Attribute: <b>{{sectionAttribute.sectionAttribute}}</b></label><span ng-show='sectionAttribute.sectionAttribute == "startTime" || sectionAttribute.sectionAttribute == "endTime"'> (e.g. 10:00 AM)</span>
-									    	<span ng-show='sectionAttribute.sectionAttribute == "meetingDays" || sectionAttribute.sectionAttribute == "endTime"'> (e.g. Monday Tuesday)</span>
-								    		<input type="email" class="form-control" ng-model="section" placeholder={{sectionAttribute.sectionAttribute}}>
-						    			</div>
-						    			<br>
-						    			<button type="button" class="btn btn-primary" ng-click="addSection(sectionModel)">Add Section</button>
-						    		</div>
-						    	</div>
-					  		</div>
-					</form>
+							
+							</div>
+					<!-- </form> -->
 				</div>
 			</div>
 		</div>
