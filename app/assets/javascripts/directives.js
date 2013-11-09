@@ -5,15 +5,25 @@ directives.directive('learnMoreModal', function(){
 		restrict: 'A',
 
 		scope: {
-			course: '=course'
+			course: '=course',
+			schedule: '=schedule'
 		},
 
 		templateUrl: "/partials/moreInfoModal.html",
 
 		link: function (scope, elem, attrs) {
-        	elem.bind('click', function(){
+
+        	scope.open = function(){
         		$('#moreInfoModal').modal('toggle');
-        	});
+        	}
+
+        	scope.close = function(){
+        		$('#moreInfoModal').modal('toggle');
+        	};
+
+        	scope.addCourseToSchedule = function(course, section){
+				scope.schedule.addCourse(course, course.sections.indexOf(section), scope.schedule.getCourses().length);
+        	};
       	}
 	};
 });
