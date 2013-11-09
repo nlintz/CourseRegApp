@@ -32,6 +32,7 @@ services.service('Schedule', [function(){
 	}
 
 	this.resetSchedule =  function(){
+		console.log('schedule reset')
 		this.scheduleRef.set([]);
 	}
 

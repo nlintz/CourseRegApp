@@ -8,10 +8,10 @@
 				<div class="row container">
 					<div class="col-md-12">
 						<div class="btn-group">
-						  <button type="button" class="btn btn-default" ng-class="{active: courseCollection == allCourses}" ng-click="switchDB('allClasses')">All Classes</button>
+						  <button type="button" class="btn btn-default" ng-class='{active: collectionId == "allCourses"}' ng-click="switchDB('allClasses')">All Classes</button>
 						  <!-- <button type="button" class="btn btn-default" ng-class="{active: courseCollection == majorReqs}" ng-click="switchDB('majorReqs')">Major Requirements</button> -->
-						  <button type="button" class="btn btn-default" ng-class="{active: courseCollection == genReqs}" ng-click="switchDB('generalReqs')">General Requirements</button>
-						  <button type="button" class="btn btn-default" ng-class="{active: courseCollection == majorReqs}" ng-click="switchDB('majorReqs')">Major Requirements</button>
+						  <button type="button" class="btn btn-default" ng-class="{active: collectionId == 'genReqs'}" ng-click="switchDB('generalReqs')">General Requirements</button>
+						  <button type="button" class="btn btn-default" ng-class="{active: collectionId == 'majorReqs'}" ng-click="switchDB('majorReqs')">Major Requirements</button>
 						</div>
 					</div>
 				</div>
@@ -33,13 +33,12 @@
 											<div ng-repeat="(key, value) in course track by $index">
 										    	<div ng-show=' typeof(value) == "string" && key != "available"'>
 											    	<label for={{key}} class="attribute-label"> <b>{{key}}</b></label>
-													<input type="text" ng-model="course[key]" ng-change="updateCourseCollection()" class="form-control" id={{key}} placeholder={{key}}>{{course[key]}}
+													<input type="text" ng-model="course[key]" ng-change="updateCourseCollection()" class="form-control" id={{key}} placeholder={{key}}>
 												</div>
 
 												<div ng-show=' key == "available" '>
 											    	<label class="attribute-label"> <b>{{key}}: </b>{{course.available}}</label>
 													<input type="checkbox" ng-model="course.available" ng-true-value="true" ng-false-value="false" ng-change="updateCourseCollection()" class="form-control" placeholder={{key}}>
-													<p>{{availible(course)}}</p>
 												</div>
 											</div>
 											<div class="container">

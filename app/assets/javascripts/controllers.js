@@ -309,13 +309,13 @@ controllers.controller('AdminController', ['$scope', '$log', 'angularFire' ,'Adm
 		}]
 	};
 
-	$scope.$watchCollection('courseCollection', function(collectionElement){
-		if (!$scope.courseCollection){
-			$scope.courseCollection = [];
-			$scope.addCourse();
-		}
+	// $scope.$watchCollection('courseCollection', function(collectionElement){
+	// 	if (!$scope.courseCollection){
+	// 		$scope.courseCollection = [];
+	// 		$scope.addCourse();
+	// 	}
 
-	});
+	// });
 
 	$scope.sectionModel = [{sectionAttribute: "meetingDays", data:""},
 		{sectionAttribute: "startTime", data:""},
@@ -352,9 +352,7 @@ controllers.controller('AdminController', ['$scope', '$log', 'angularFire' ,'Adm
 			};
 		});
 
-		if ($scope.collectionId == 'allCourses'){
-			$scope.allCourses = $scope.courseCollection;
-		}
+		$scope.updateCourseCollection();
 	};
 
 	$scope.deleteSection = function(course, section){
@@ -366,6 +364,7 @@ controllers.controller('AdminController', ['$scope', '$log', 'angularFire' ,'Adm
 	};
 
 	$scope.addCourse = function(){
+		console.log($scope.collectionId)
 		$scope.courseCollection.unshift($scope.newCourse);
 
 		if ($scope.collectionId == 'allCourses'){
@@ -410,14 +409,24 @@ controllers.controller('AdminController', ['$scope', '$log', 'angularFire' ,'Adm
 	$scope.switchDB = function(db){
 		if (db == 'allClasses'){
 			$scope.courseCollection = $scope.allCourses;
+			$scope.collectionId = 'allCourses';
 		}
 
 		if (db == 'majorReqs'){
 			$scope.courseCollection = $scope.majorReqs;
+			$scope.collectionId = 'majorReqs';
 		}
 
 		if (db == 'generalReqs'){
 			$scope.courseCollection = $scope.genReqs;
+			$scope.collectionId = 'genReqs';
 		}
 	}
+}]);
+
+controllers.controller('LoginController', ['$scope', '$location', 'Schedule', function($scope, $location, Schedule){
+	$scope.login = function(){
+		Schedule.resetSchedule();
+		$location.path('requirements');
+	};
 }]);
