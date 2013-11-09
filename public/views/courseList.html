@@ -14,7 +14,7 @@
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-md-6 col-sm-6 col-xs-6">
-							<p>{{course.description}}</p>
+							<p>{{course.description | truncate:150}}</p>
 							<p learn-more-modal course="course"></p>
 						</div>
 						<div class="col-md-6 col-sm-6 col-xs-6">
