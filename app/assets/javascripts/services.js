@@ -80,8 +80,8 @@ services.service('Schedule', [function(){
 			};
 		});
 		this.courses.splice(indexToRemove, 1);
-		this.scheduleRef.set(this.formatCoursesForFirebase(this.courses));
 		this.reprioritizeCourses();
+		this.scheduleRef.set(this.formatCoursesForFirebase(this.courses));
 	};
 
 	this.formatCoursesForFirebase = function(courses){
