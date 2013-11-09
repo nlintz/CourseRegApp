@@ -281,15 +281,16 @@ controllers.controller('AdminController', ['$scope', '$log', 'angularFire' ,'Adm
 
 	allClassesPromise.then(function(){
 		$scope.courseCollection = $scope.allCourses;
+		$scope.collectionId = "allCourses";
 	})
 
 	var newCourseModel = {
 	"className": "",
 	"description":"",
-	"prerequisites":[""],
+	"prerequisites":[],
 	"professor":"",
 	"available":"true",
-	"sections": [""]
+	"sections": []
 	};
 
 	$scope.newCourse = {
@@ -313,6 +314,7 @@ controllers.controller('AdminController', ['$scope', '$log', 'angularFire' ,'Adm
 			$scope.courseCollection = [];
 			$scope.addCourse();
 		}
+
 	});
 
 	$scope.sectionModel = [{sectionAttribute: "meetingDays", data:""},
@@ -321,6 +323,12 @@ controllers.controller('AdminController', ['$scope', '$log', 'angularFire' ,'Adm
 		{sectionAttribute: "sectionNumber", data:""},
 		{sectionAttribute: "studentsRegistered", data:""},
 		{sectionAttribute: "spotsInClass", data:""}];
+
+	function updateCourseCollection(){
+		if ($scope.collectionId == 'allCourses'){
+			$scope.allCourses = $scope.courseCollection;
+		}
+	};
 
 	$scope.addSection = function(course){
 		var section={}
@@ -334,6 +342,7 @@ controllers.controller('AdminController', ['$scope', '$log', 'angularFire' ,'Adm
 			};
 		});
 		course.sections.push(section);
+		$scope.updateCourseCollection();
 	};
 
 	$scope.deleteCourse = function(course){
@@ -342,6 +351,10 @@ controllers.controller('AdminController', ['$scope', '$log', 'angularFire' ,'Adm
 				$scope.courseCollection.splice(index, 1)
 			};
 		});
+
+		if ($scope.collectionId == 'allCourses'){
+			$scope.allCourses = $scope.courseCollection;
+		}
 	};
 
 	$scope.deleteSection = function(course, section){
@@ -353,17 +366,45 @@ controllers.controller('AdminController', ['$scope', '$log', 'angularFire' ,'Adm
 	};
 
 	$scope.addCourse = function(){
-		$scope.courseCollection.push($scope.newCourse);
-		$scope.newCourse = newCourseModel;
+		$scope.courseCollection.unshift($scope.newCourse);
+
+		if ($scope.collectionId == 'allCourses'){
+			$scope.allCourses = $scope.courseCollection;
+		}
+
+		$scope.newCourse = {
+			"className": "",
+			"description":"",
+			"prerequisites":[],
+			"professor":"",
+			"available":"true",
+			"sections": []
+			};
+	}
+
+	$scope.availible = function(course){
+		if (course.availible != undefined){
+			if (course.availible == true || course.availible == "true"){
+				return "true"
+			};
+			return "false"
+		}
 	}
 
 	$scope.typeof = function(object){
 		return typeof(object)
 	};
 
-	$scope.toggleAvailable = function(course){
-		// console.log(typeof(course.available))
-		course.available = !course.available;
+	$scope.updateCourseCollection = function(){
+		if ($scope.collectionId == 'allCourses'){
+			$scope.allCourses = $scope.courseCollection;
+		}
+		if ($scope.collectionId == 'majorReqs'){
+			$scope.majorReqs = $scope.courseCollection;
+		}
+		if ($scope.collectionId == 'genReqs'){
+			$scope.genReqs = $scope.courseCollection;
+		}
 	}
 
 	$scope.switchDB = function(db){

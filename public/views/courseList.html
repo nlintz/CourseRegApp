@@ -19,10 +19,9 @@
 						<div class="col-md-6 col-sm-6 col-xs-6">
 							<div class="btn-group" ng-repeat="section in course.sections">
 								<div class="row">
-									<p>Meeting Days:</p>
 									<p>{{section.meetingDays | ArrayToString}}: {{section.startTime}}-{{section.endTime}}</p>
-									<p>Section Number: {{section.sectionNumber}}</p>
-									<p>Number of Students In Class: {{section.studentsRegistered}}/{{section.spotsInClass}}</p>
+									<p>Section: {{section.sectionNumber}}</p>
+									<p>Number of Students In Section: {{section.studentsRegistered}}/{{section.spotsInClass}}</p>
 				    				<div ng-show="course.available">
 				    					<div ng-hide="courseInSchedule(course)">
 						    				<button type="button" class="btn btn-success" ng-click="addCourseToSchedule(course, section)">Add Class</button>

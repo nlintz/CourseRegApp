@@ -31,6 +31,10 @@ services.service('Schedule', [function(){
 		this.courses = schedule;
 	}
 
+	this.resetSchedule =  function(){
+		this.scheduleRef.set([]);
+	}
+
 	this.getCourses = function(courses){
 		return this.courses;
 	}

@@ -21,7 +21,7 @@
 						<button href="#" class="btn btn-success btn-lg pull-left" ng-click="addCourse()">Add Course</button>
 						<div class="row">
 							<div class="col-md-8">
-								<div class="panel panel-default" ng-repeat="course in courseCollection">
+								<div class="panel panel-default" ng-repeat="course in courseCollection track by $index">
 									<div class="panel panel-default">
 										<div class="panel-heading">
 											<h3 class="panel-title">{{course.className}}</h3>
@@ -33,29 +33,30 @@
 											<div ng-repeat="(key, value) in course track by $index">
 										    	<div ng-show=' typeof(value) == "string" && key != "available"'>
 											    	<label for={{key}} class="attribute-label"> <b>{{key}}</b></label>
-													<input type="text" ng-model="course[key]" class="form-control" id={{key}} placeholder={{key}}>
+													<input type="text" ng-model="course[key]" ng-change="updateCourseCollection()" class="form-control" id={{key}} placeholder={{key}}>{{course[key]}}
 												</div>
 
 												<div ng-show=' key == "available" '>
-											    	<label class="attribute-label"> <b>{{key}}</b></label>
-													<input type="checkbox" ng-model="course.available" ng-true-value="true" ng-false-value="false" class="form-control" placeholder={{key}}>
+											    	<label class="attribute-label"> <b>{{key}}: </b>{{course.available}}</label>
+													<input type="checkbox" ng-model="course.available" ng-true-value="true" ng-false-value="false" ng-change="updateCourseCollection()" class="form-control" placeholder={{key}}>
+													<p>{{availible(course)}}</p>
 												</div>
 											</div>
 											<div class="container">
 												<h3>Sections</h3>
 													<button class="btn btn-primary btn-lg" ng-click="addSection(course)">Add New Section</button>
-												<div ng-repeat="section in course.sections">
+												<div ng-repeat="section in course.sections track by $index">
 													<h3>Section: {{section.sectionNumber}}</h3>
 												    <button href="#" class="btn btn-warning btn-md pull-right" ng-click="deleteSection(course, section)">Delete Section</button>
 
 													<div ng-repeat="(key, value) in section track by $index">
 														<div ng-hide='key == "meetingDays"'>
 													    	<label class="attribute-label"> <b>{{key}}</b></label>
-															<input ng-model="section[key]" type="text" class="form-control" placeholder={{key}}>
+															<input ng-model="section[key]" ng-change="updateCourseCollection()" type="text" class="form-control" placeholder={{key}}>
 														</div>
 														<div ng-show='key == "meetingDays"'>
 													    	<label class="attribute-label"> <b>{{key}}</b></label>
-															<input ng-list ng-model="section[key]" type="text" class="form-control" placeholder={{key}}>
+															<input ng-list ng-model="section[key]" ng-change="updateCourseCollection()" type="text" class="form-control" placeholder={{key}}>
 														</div>
 													</div>
 													<hr>
