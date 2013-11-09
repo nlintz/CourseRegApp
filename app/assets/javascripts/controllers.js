@@ -429,7 +429,7 @@ controllers.controller('LoginController', ['$scope', '$location', 'Schedule', 'U
 	console.log(User.name)
 	$scope.login = function(){
 		User.name = $scope.username;
-		Schedule.resetSchedule();
+		// Schedule.resetSchedule();
 		$location.path('requirements');
 	};
 }]);
