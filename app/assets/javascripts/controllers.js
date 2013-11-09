@@ -426,6 +426,7 @@ controllers.controller('AdminController', ['$scope', '$log', 'angularFire' ,'Adm
 
 controllers.controller('LoginController', ['$scope', '$location', 'Schedule', 'User', function($scope, $location, Schedule, User){
 	$scope.username = "";
+	console.log(User.name)
 	$scope.login = function(){
 		User.name = $scope.username;
 		Schedule.resetSchedule();
