@@ -17,8 +17,8 @@
 				<div class="schedule-column-container">
 					<div ng-repeat="section in day.sections">
 						<div class="calendar-event" ng-style="styleSection(section)" ng-click="switchSection(section)">
-							<p>{{section.courseName}}</p>
-							<p>Section Number: {{section.sectionNumber + 1 }}
+							<p>{{section.courseName | truncate:30:' '}}</p>
+							<p>Section: {{section.sectionNumber + 1 }}
 						</div>
 					</div>
 				</div>
