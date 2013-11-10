@@ -131,6 +131,10 @@ controllers.controller('CalendarController', ['$scope', 'Schedule', function($sc
 	var dayStart = 9;
 	var colors = ["#1abc9c", "#27ae60", "#2980b9", "#8e44ad", "#c0392b", "#f39c12"];
 	var colorIndex = 0;
+
+	var yScale = $('.axes-time').height()/60;
+	var xScale = $('.calendar-column').width();
+
 	function convertSectionTimeToIntArray(section){
 		return [_.map(section.startTime.split(':'), function(time){return parseInt(time, 10)}),
 		_.map(section.endTime.split(':'), function(time){return parseInt(time, 10)})];
@@ -213,15 +217,13 @@ controllers.controller('CalendarController', ['$scope', 'Schedule', function($sc
 	};
 
 	$scope.styleSection = function(section){
-		var yScale = $('.axes-time').height()/60;
-		var xScale = $('.calendar-event').width();
 		var height = section.height * yScale;
 		var top = section.start * yScale;
 
 		var width = section.width * xScale;
 		var left = section.width * section.column * xScale;
 		color = section.color;
-		
+
 		if (section.selectedSection){
 			return {'height': height, 'top': top, 
 			'width': width, 

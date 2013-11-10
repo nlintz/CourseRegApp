@@ -1,3 +1,7 @@
+.axes-time {
+	height: 48px;
+}
+
 .calendar-container {
 	width: 100%;
 	padding-left: 0!important;
@@ -12,17 +16,16 @@
 }
 
 .calendar-axes-container {
-	left: 7%;
+	left: 5%;
 	margin-top: 5%;
-	.axes-time {
-		height: 40px;
-	}
 }
+
+
 
 .calendar-column {
 	padding-left: 0!important;
 	padding-right: 0!important;
-	width: 60px !important;
+	width: 72px !important;
 }
 
 .calendar-event {
