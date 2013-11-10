@@ -253,6 +253,10 @@ controllers.controller('CalendarController', ['$scope', 'Schedule', function($sc
 		return (courseSection.end - courseSection.start)/60;
 	};
 
+	$scope.strToInt = function(str){
+		return parseInt(str, 10);
+	}
+
 }]);
 
 controllers.controller('SearchController', ['$scope', '$location', function($scope, $location){
