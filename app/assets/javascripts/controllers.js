@@ -165,7 +165,7 @@ controllers.controller('CalendarController', ['$scope', 'Schedule', function($sc
 
 				section.start = sectionStartEndTimes.start;
 				section.end = sectionStartEndTimes.end;
-				section.height = (section.end - section.start) * $('.axes-time').height()/60;
+				section.height = (section.end - section.start);
 				section.color = scheduleElement.course.color;
 				
 				section.courseName = scheduleElement.course.className;
@@ -213,11 +213,15 @@ controllers.controller('CalendarController', ['$scope', 'Schedule', function($sc
 	};
 
 	$scope.styleSection = function(section){
-		var height = section.height;
-		var top = section.start * (2/3);
-		var width = section.width * 60;
-		var left = section.width * section.column * 60;
+		var yScale = $('.axes-time').height()/60;
+		var xScale = $('.calendar-event').width();
+		var height = section.height * yScale;
+		var top = section.start * yScale;
+
+		var width = section.width * xScale;
+		var left = section.width * section.column * xScale;
 		color = section.color;
+		
 		if (section.selectedSection){
 			return {'height': height, 'top': top, 
 			'width': width, 
