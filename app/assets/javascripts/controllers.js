@@ -227,6 +227,8 @@ controllers.controller('CalendarController', ['$scope', 'Schedule', function($sc
 		if (section.selectedSection){
 			return {'height': height, 'top': top, 
 			'width': width, 
+			'color': '#ecf0f1',
+			'font-weight': 100,
 			'left': left,
 			'background-color': color}
 		}
@@ -234,7 +236,10 @@ controllers.controller('CalendarController', ['$scope', 'Schedule', function($sc
 			return { 'height': height, 'top': top, 
 			'width': width, 
 			'left': left,
-			'border': '1px solid ' + color}
+			'border': '1px solid ' + color,
+			'color': '#34495e',
+			'font-weight': 600
+			}
 		};
 
 	};

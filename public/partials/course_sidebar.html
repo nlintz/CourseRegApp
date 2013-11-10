@@ -1,6 +1,9 @@
 <div class="container" ng-controller="CourseSidebarController">
 	<div class="row">
-		<h1>Preferred Courses</h1>
+		<div class="col-md-12">
+			<h1>Courses</h1>
+			<p>You will automatically be registered for these courses when your registration period opens.</p>
+		</div>
 		<div class="col-md-12">
 			<div class="row" ng-repeat="course in user.schedule | orderBy:'priority'">
 				<div class="col-md-11 col-md-offset-1">

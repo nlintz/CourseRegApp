@@ -31,9 +31,10 @@
 .calendar-event {
 	position: absolute;
 	p {
+		text-align: center;
 		word-wrap: break-word;
 		font-size: .8em;
-		color: #34495e;
+		margin-bottom: 0px;
 	}
 }
 
