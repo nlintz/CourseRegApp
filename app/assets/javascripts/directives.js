@@ -21,7 +21,7 @@ directives.directive('learnMoreModal', function(){
         	};
 
         	scope.addCourseToSchedule = function(course, section){
-				scope.schedule.addCourse(course, course.sections.indexOf(section), scope.schedule.getCourses().length);
+				scope.schedule.addCourse(course, course.sections.indexOf(section), scope.schedule.courses.length);
         	};
 
         	scope.formatId = function(className){

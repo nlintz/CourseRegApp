@@ -23,6 +23,8 @@ controllers.controller('RequirementsController', ['$scope', 'angularFire', 'User
 	});
 
 	$scope.user = User;
+	$scope.scheduleService = Schedule;
+
 
 	schedulePromise.then(function(){
 		Schedule.setCourses($scope.firebaseSchedule);
@@ -73,6 +75,7 @@ controllers.controller('ClassListController', ['$scope', '$routeParams',  'angul
 	});
 
 	$scope.user = User;
+	$scope.scheduleService = Schedule;
 
 	schedulePromise.then(function(){
 		Schedule.setCourses($scope.firebaseSchedule);
