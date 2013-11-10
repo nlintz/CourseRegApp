@@ -1,8 +1,15 @@
 var controllers = angular.module('Controllers', []);
 
-function processCourseAvailable(courses, Schedule){
+function preprocessCourses(courses, Schedule){
+	var colors = ["#1abc9c", "#27ae60", "#2980b9", "#8e44ad", "#c0392b", "#f39c12"];
+	var colorIndex = 0;
+
 	angular.forEach(courses, function(course){
 		course.available = (course.available == 'true' || course.available == true) ? true : false;
+		if (course.color == undefined){
+			course.color = colors[colorIndex];
+			colorIndex += 1;
+		};
 	});
 };
 
@@ -14,12 +21,12 @@ controllers.controller('RequirementsController', ['$scope', 'angularFire', 'User
 	var genReqsPromise = angularFire(GeneralRequirementsUrl, $scope, "genReqs");
 	var majorReqsPromise = angularFire(MajorRequirementsUrl, $scope, "majorReqs");
 	var schedulePromise = angularFire(ScheduleUrl, $scope, "firebaseSchedule");
-	
+
 	genReqsPromise.then(function(){
-		processCourseAvailable($scope.genReqs, Schedule);
+		preprocessCourses($scope.genReqs, Schedule);
 	});
 	majorReqsPromise.then(function(){
-		processCourseAvailable($scope.majorReqs, Schedule);
+		preprocessCourses($scope.majorReqs, Schedule);
 	});
 
 	$scope.user = User;
@@ -73,7 +80,7 @@ controllers.controller('ClassListController', ['$scope', '$routeParams',  'angul
 	
 	//Data preprocessing for classes
 	AllClassesPromise.then(function(){
-		processCourseAvailable($scope.classList, Schedule);
+		preprocessCourses($scope.classList, Schedule);
 	});
 
 	$scope.user = User;
@@ -153,9 +160,6 @@ controllers.controller('CalendarController', ['$scope', 'Schedule', function($sc
 		$scope.sectionsInCalendar = new sectionsInCalendar();
 
 		angular.forEach(scheduleElements, function(scheduleElement){
-			scheduleElement.course.color = scheduleElement.course.color ? scheduleElement.course.color : colors[colorIndex];
-			colorIndex = (colorIndex + 1) % colors.length;
-
 			angular.forEach(scheduleElement.course.sections, function(section){
 				var sectionStartEndTimes = convertSectionTimeToMinutes(section)
 
@@ -250,8 +254,9 @@ controllers.controller('SearchController', ['$scope', '$location', function($sco
 controllers.controller('CourseSidebarController', ['$scope', '$filter', 'angularFire', 'Schedule', function($scope, $filter, angularFire, Schedule, ClassesStub){
 	var AllClasses = new Firebase("https://team-cinnamon.firebaseio.com/AllClasses");
 	var SidebarCoursesPromise = angularFire(AllClasses, $scope, "allCourses");
+	
 	SidebarCoursesPromise.then(function(){
-		processCourseAvailable($scope.allCourses, Schedule);
+		preprocessCourses($scope.allCourses, Schedule);
 	});
 
 	$scope.sidebarAddModel = "";
