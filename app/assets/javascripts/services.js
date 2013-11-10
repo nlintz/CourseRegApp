@@ -36,7 +36,7 @@ services.service('Schedule', ['User', function(User){
 	}
 
 	this.getCourses = function(courses){
-		this.scheduleRef = new Firebase('https://team-cinnamon.firebaseio.com/Schedule/' + User.name);
+		this.scheduleRef = new Firebase('https://team-cinnamon.firebaseio.com/Schedule/' + User.name); // Todo move this to init b/c not part of getCourses logic
 		return this.courses;
 	}
 

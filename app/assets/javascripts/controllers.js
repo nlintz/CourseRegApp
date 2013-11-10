@@ -151,15 +151,17 @@ controllers.controller('CalendarController', ['$scope', 'Schedule', function($sc
 
 	$scope.$watchCollection('user.schedule', function(scheduleElements){
 		$scope.sectionsInCalendar = new sectionsInCalendar();
+
 		angular.forEach(scheduleElements, function(scheduleElement){
 			scheduleElement.course.color = scheduleElement.course.color ? scheduleElement.course.color : colors[colorIndex];
-			colorIndex = (colorIndex + 1)%colors.length;
+			colorIndex = (colorIndex + 1) % colors.length;
+
 			angular.forEach(scheduleElement.course.sections, function(section){
 				var sectionStartEndTimes = convertSectionTimeToMinutes(section)
 
 				section.start = sectionStartEndTimes.start;
 				section.end = sectionStartEndTimes.end;
-				section.height = (section.end - section.start);
+				section.height = (section.end - section.start) * $('.axes-time').height()/60;
 				section.color = scheduleElement.course.color;
 				
 				section.courseName = scheduleElement.course.className;
@@ -184,7 +186,7 @@ controllers.controller('CalendarController', ['$scope', 'Schedule', function($sc
 
 			});
 		});
-
+		
 		angular.forEach($scope.sectionsInCalendar, function(day){
 			var sortedCourses = sortService.sortEventsByStartTime(day.sections);
 			var processedData = eventsDataService.getEventsData(sortedCourses, Schedule);
