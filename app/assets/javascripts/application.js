@@ -17,6 +17,7 @@
 //= require angular.min
 //= require keypress
 //= require angularfire
+//= require angular-cookies
 //= require angularModal
 //= require turbolinks
 //= require_tree .

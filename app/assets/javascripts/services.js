@@ -19,8 +19,8 @@ services.service('AdminService', [function(){
 	};
 }])
 
-services.service('Schedule', [function(){
-	this.scheduleRef = new Firebase('https://team-cinnamon.firebaseio.com/Schedule');
+services.service('Schedule', ['User', function(User){
+	this.scheduleRef = new Firebase('https://team-cinnamon.firebaseio.com/Schedule/' + User.name);
 	this.courses = [];
 
 	this.setCourses = function(courses){
@@ -117,9 +117,27 @@ services.service('Schedule', [function(){
 
 }]);
 
-services.service('User', [function(){
-	this.name = "Tyler";
+services.service('User', ['$cookies', function($cookies){
+	this.name = "Default User";
+
+	if ($cookies.username){
+		this.name = $cookies.username;
+	};
+
 	this.major = "E:XYZ";
 	this.yog = 15;
 	this.takenClasses = [];
+
+	this.setUsername = function(name){
+		$cookies.username = name;
+	};
+
+	this.getUsername = function(){
+		if ($cookies.username){
+			return $cookies.username;
+		}
+		else {
+			return this.name;
+		};
+	}
 }]);
