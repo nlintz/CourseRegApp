@@ -9,7 +9,7 @@ function processCourseAvailable(courses, Schedule){
 controllers.controller('RequirementsController', ['$scope', 'angularFire', 'User', 'Schedule', function($scope, angularFire, User, Schedule){
 	var GeneralRequirementsUrl = new Firebase("https://team-cinnamon.firebaseio.com/GeneralRequirements");
 	var MajorRequirementsUrl = new Firebase("https://team-cinnamon.firebaseio.com/MajorRequirements");
-	var ScheduleUrl = new Firebase('https://team-cinnamon.firebaseio.com/Schedule/' + User.name);
+	var ScheduleUrl = new Firebase('https://team-cinnamon.firebaseio.com/Schedule/' + User.getUsername());
 
 	var genReqsPromise = angularFire(GeneralRequirementsUrl, $scope, "genReqs");
 	var majorReqsPromise = angularFire(MajorRequirementsUrl, $scope, "majorReqs");
@@ -23,7 +23,7 @@ controllers.controller('RequirementsController', ['$scope', 'angularFire', 'User
 	});
 
 	$scope.user = User;
-	// $scope.user.name = User.getUsername();
+	$scope.user.name = User.getUsername();
 
 	$scope.scheduleService = Schedule;
 
@@ -66,7 +66,7 @@ controllers.controller('ClassListController', ['$scope', '$routeParams',  'angul
 	};
 	
 	var AllClasses = new Firebase("https://team-cinnamon.firebaseio.com/AllClasses");
-	var ScheduleUrl = new Firebase('https://team-cinnamon.firebaseio.com/Schedule/' + User.name);
+	var ScheduleUrl = new Firebase('https://team-cinnamon.firebaseio.com/Schedule/' + User.getUsername());
 
 	var AllClassesPromise = angularFire(AllClasses, $scope, "classList");
 	var schedulePromise = angularFire(ScheduleUrl, $scope, "firebaseSchedule");
@@ -369,7 +369,6 @@ controllers.controller('AdminController', ['$scope', '$log', 'angularFire' ,'Adm
 	};
 
 	$scope.addCourse = function(){
-		console.log($scope.collectionId)
 		$scope.courseCollection.unshift($scope.newCourse);
 
 		if ($scope.collectionId == 'allCourses'){
@@ -432,7 +431,6 @@ controllers.controller('AdminController', ['$scope', '$log', 'angularFire' ,'Adm
 controllers.controller('LoginController', ['$scope', '$location', 'Schedule', 'User', function($scope, $location, Schedule, User){
 	$scope.username = "";
 	$scope.login = function(){
-		User.name = $scope.username;
 		User.setUsername($scope.username);
 		$location.path('requirements');
 	};

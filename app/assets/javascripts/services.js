@@ -32,11 +32,11 @@ services.service('Schedule', ['User', function(User){
 	}
 
 	this.resetSchedule =  function(){
-		console.log('schedule reset')
 		this.scheduleRef.set([]);
 	}
 
 	this.getCourses = function(courses){
+		this.scheduleRef = new Firebase('https://team-cinnamon.firebaseio.com/Schedule/' + User.name);
 		return this.courses;
 	}
 
