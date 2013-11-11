@@ -24,6 +24,10 @@ directives.directive('learnMoreModal', function(){
 				scope.schedule.addCourse(course, course.sections.indexOf(section), scope.schedule.courses.length);
         	};
 
+            scope.strToInt = function(str){
+                return parseInt(str, 10);
+            }
+
         	scope.formatId = function(className){
         		// console.log(className)
         		return className.split(" ").join("");

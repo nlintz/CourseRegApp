@@ -16,7 +16,7 @@
         <hr>
         <div class="row">
           <div class="col-md-4" ng-repeat="section in modalCourse.sections">
-            <p>Section {{section.sectionNumber + 1}}</p>
+            <p>Section {{strToInt(section.sectionNumber) + 1}}</p>
             <p>{{section.meetingDays | ArrayToString}}: {{section.startTime}}-{{section.endTime}}</p>
             <div ng-show="modalCourse.available">
               <div ng-hide="schedule.inSchedule(modalCourse)">
