@@ -34,9 +34,9 @@
 			</div>
 			<div class="row">
 				<div class="col-md-12">
-					<p>Add Class</p>
+					<label for="add-course-input">Add Class</label>
 					<div class="input-group">
-						<input type="text" ng-model="sidebarAddModel" ui-keypress="{13:'addCourseFromSidebar(sidebarAddModel)'}" class="form-control" placeholder="Class Name" />
+						<input type="text" ng-model="sidebarAddModel" ui-keypress="{13:'addCourseFromSidebar(sidebarAddModel)'}" class="form-control" placeholder="Class Name" id="add-course-input"/>
 						<span class="input-group-addon" ng-click="addCourseFromSidebar(sidebarAddModel)">
 							<button type="button" class="btn sidebar-plus-btn">
 								<a class="glyphicon glyphicon-plus sidebar-add-target"></a>
