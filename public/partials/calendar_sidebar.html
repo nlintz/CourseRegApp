@@ -18,7 +18,7 @@
 					<div ng-repeat="section in day.sections">
 						<div class="calendar-event" ng-style="styleSection(section)" ng-click="switchSection(section)">
 							<p>{{section.courseName | truncate:30:' '}}</p>
-							<p>Section: {{strToInt(section.sectionNumber, 10) + 1 }}
+							<p ng-show=" section.width == 1 ">Section: {{strToInt(section.sectionNumber, 10) + 1 }}</p>
 						</div>
 					</div>
 				</div>

@@ -278,6 +278,7 @@ controllers.controller('CourseSidebarController', ['$scope', '$filter', 'angular
 
 	$scope.addCourseFromSidebar = function(course){
 		if ($scope.sidebarAddModel){
+
 			var courseToAdd = $filter('filter')($scope.allCourses, $scope.sidebarAddModel)[0];
 			if (courseToAdd.available == "true" || courseToAdd.available == true){
 				Schedule.addCourse(courseToAdd, 0, Schedule.getCourses().length);
