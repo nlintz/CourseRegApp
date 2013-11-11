@@ -23,3 +23,16 @@ filters.filter('truncate', function () {
 
     };
 });
+
+filters.filter('twentyFourHour', function(){
+    return function(time){
+        var hour = parseInt(time.split(':')[0], 10);
+        var minutes = time.split(':')[1];
+        if (hour > 12){
+            return String(hour-12) + ':' + minutes
+        }
+        else {
+            return time
+        }
+    }
+})

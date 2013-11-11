@@ -20,7 +20,7 @@
 						<div class="col-md-6 col-sm-6 col-xs-6">
 							<div class="btn-group" ng-repeat="section in course.sections">
 								<div class="row">
-									<p>{{section.meetingDays | ArrayToString}}: {{section.startTime}}-{{section.endTime}}</p>
+									<p>{{section.meetingDays | ArrayToString}}: {{section.startTime | twentyFourHour}}-{{section.endTime | twentyFourHour}}</p>
 									<p>Section: {{section.sectionNumber + 1}}</p>
 									<p>Number of Students In Section: {{section.studentsRegistered}}/{{section.spotsInClass}}</p>
 				    				<div ng-show="course.available">
@@ -37,7 +37,7 @@
 			    				<br>
 			    			</div>
 			    			<div ng-hide="course.available">
-		    					<button type="button" class="btn btn-success" disabled="disabled">Class Not Available</button>
+		    					<button type="button" class="btn btn-success" disabled="disabled">Not Available This Semester</button>
 				    		</div>
 						</div>
 					</div>
