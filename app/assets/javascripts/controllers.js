@@ -214,6 +214,8 @@ controllers.controller('CalendarController', ['$scope', 'Schedule', function($sc
 		if (!section.selectedSection){
 			section.selectedSection = true;
 		};
+
+		Schedule.updateScheduleInFirebase();
 	};
 
 	$scope.styleSection = function(section){
@@ -449,4 +451,8 @@ controllers.controller('LoginController', ['$scope', '$location', 'Schedule', 'U
 		User.setUsername($scope.username);
 		$location.path('/requirements');
 	};
+}]);
+
+controllers.controller('TopNavigationController', ['$scope', function($scope){
+
 }]);
