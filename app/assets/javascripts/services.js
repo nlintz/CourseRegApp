@@ -29,6 +29,11 @@ services.service('Schedule', ['User', function(User){
 			schedule.push({course: JSON.parse(course.course), section: parseInt(course.section, 10), priority: parseInt(course.priority, 10)});
 		});
 		this.courses = schedule;
+		// this.scheduleRef.set(this.formatCoursesForFirebase(this.courses));
+	}
+
+	this.updateSchedule = function(courses){
+		this.scheduleRef.set(this.formatCoursesForFirebase(this.courses));	
 	}
 
 	this.resetSchedule =  function(){

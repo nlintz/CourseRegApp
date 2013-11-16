@@ -443,14 +443,10 @@ controllers.controller('AdminController', ['$scope', '$log', 'angularFire' ,'Adm
 	}
 }]);
 
-controllers.controller('LoginController', ['$scope', '$location', '$http', 'Schedule', 'User', function($scope, $location, $http, Schedule, User){
+controllers.controller('LoginController', ['$scope', '$location', 'Schedule', 'User', function($scope, $location, Schedule, User){
+	console.log($scope.username)
 	$scope.login = function(){
-		$http.get('http://www.google.com');
 		User.setUsername($scope.username);
-		// $location.path('/requirements');
+		$location.path('/requirements');
 	};
-}]);
-
-controllers.controller('TopNavigationController', ['$scope', function($scope){
-	//No controller logic needed yet
 }]);
