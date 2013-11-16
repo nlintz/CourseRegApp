@@ -35,3 +35,14 @@ directives.directive('learnMoreModal', function(){
       	}
 	};
 });
+
+directives.directive('affixed', function(){
+    return {
+        restrict: 'A',
+        link: function(scope, elem, attrs) {
+            elem.affix({
+                offset: { top: elem.offset().top }
+            });
+        }
+    }
+})

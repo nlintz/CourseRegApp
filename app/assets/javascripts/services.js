@@ -117,6 +117,7 @@ services.service('Schedule', ['User', function(User){
 			};
 		};
 		this.sortCourses();
+		this.updateScheduleInFirebase();
 	};
 
 }]);
