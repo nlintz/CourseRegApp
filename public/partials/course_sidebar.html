@@ -1,4 +1,4 @@
-<div class="container" id="sidebar-container" ng-controller="CourseSidebarController">
+<div class="container sidebar" id="sidebar-container" ng-controller="CourseSidebarController">
 	<div class="row">
 		<div class="col-md-12">
 			<h1>Course Priority</h1>
@@ -6,16 +6,16 @@
 		</div>
 		<div class="col-md-12">
 			<div class="row" ng-repeat="course in user.schedule | orderBy:'priority'">
-				<div class="col-md-11 col-md-offset-1">
-					<div class="row">
-						<div class="col-md-2">
+				<div class="col-md-11 col-md-offset-1 panel panel-default" ng-style="stylePanel(course)">
+					<div class="row panel-body">
+						<div class="col-md-2 up-down-container">
 							<div class="row">
-								<button type="button" class="btn" ng-click="changeCoursePriority($index, 'up')">
+								<button type="button" class="btn btn-up-down" ng-click="changeCoursePriority($index, 'up')">
 									<span class="glyphicon glyphicon-arrow-up"></span>
 								</button>
 							</div>
 							<div class="row">
-								<button type="button" class="btn" ng-click="changeCoursePriority($index, 'down')">
+								<button type="button" class="btn btn-up-down" ng-click="changeCoursePriority($index, 'down')">
 									<span class="glyphicon glyphicon-arrow-down"></span>
 								</button>
 							</div>
@@ -24,7 +24,7 @@
 							<p>{{course.course.className}}</p>
 							<p>Section: {{course.section + 1}}</p>
 						</div>
-						<div class="col-md-2">
+						<div class="col-md-2 close-sidebar-element">
 							<button type="button" class="btn" ng-click="removeCourseFromSchedule(course.course)">
 								<a class="close">x</a>
 							</button>

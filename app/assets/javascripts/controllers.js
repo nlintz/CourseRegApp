@@ -298,6 +298,12 @@ controllers.controller('CourseSidebarController', ['$scope', '$filter', 'angular
 		Schedule.removeCourse(course);
 		$scope.user.schedule = Schedule.getCourses();
 	};
+
+	$scope.stylePanel = function(course){
+		return {
+			'background-color':course.course.color
+		}
+	}
 }]);
 
 controllers.controller('AdminController', ['$scope', '$log', 'angularFire' ,'AdminService', function($scope, $log, angularFire, AdminService){
