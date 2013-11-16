@@ -337,14 +337,6 @@ controllers.controller('AdminController', ['$scope', '$log', 'angularFire' ,'Adm
 		}]
 	};
 
-	// $scope.$watchCollection('courseCollection', function(collectionElement){
-	// 	if (!$scope.courseCollection){
-	// 		$scope.courseCollection = [];
-	// 		$scope.addCourse();
-	// 	}
-
-	// });
-
 	$scope.sectionModel = [{sectionAttribute: "meetingDays", data:""},
 		{sectionAttribute: "startTime", data:""},
 		{sectionAttribute: "endTime", data:""},
@@ -452,9 +444,9 @@ controllers.controller('AdminController', ['$scope', '$log', 'angularFire' ,'Adm
 }]);
 
 controllers.controller('LoginController', ['$scope', '$location', 'Schedule', 'User', function($scope, $location, Schedule, User){
-	$scope.username = "";
+	console.log($scope.username)
 	$scope.login = function(){
 		User.setUsername($scope.username);
-		$location.path('requirements');
+		$location.path('/requirements');
 	};
 }]);
