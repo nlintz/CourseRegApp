@@ -5,7 +5,7 @@
 			<p>You will automatically be registered for these courses when your registration period opens.</p>
 		</div>
 		<div class="col-md-12">
-			<div class="row" ng-repeat="course in user.schedule | orderBy:'priority'">
+			<div class="row" ng-repeat="course in user.schedule | orderBy:'priority'" swappable>
 				<div class="col-md-11 col-md-offset-1 panel panel-default" ng-style="stylePanel(course)">
 					<div class="row panel-body">
 						<div class="col-md-2 up-down-container">

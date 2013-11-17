@@ -17,7 +17,7 @@
         <div class="row">
           <div class="col-md-4" ng-repeat="section in modalCourse.sections">
             <p>Section {{strToInt(section.sectionNumber) + 1}}</p>
-            <p>{{section.meetingDays | ArrayToString}}: {{section.startTime}}-{{section.endTime}}</p>
+            <p>{{section.meetingDays | ArrayToString}}: {{section.startTime | twentyFourHour}}-{{section.endTime | twentyFourHour}}</p>
             <div ng-show="modalCourse.available">
               <div ng-hide="schedule.inSchedule(modalCourse)">
                 <button type="button" class="btn btn-success" ng-click="addCourseToSchedule(modalCourse, section)">Add Class</button>
