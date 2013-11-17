@@ -54,7 +54,7 @@ directives.directive('swappable', function(){
             course: '=course'
         },
         link: function(scope, elem, attr){
-            console.log('skurp')
+            // $scope.$apply();
         }
     }
 })
