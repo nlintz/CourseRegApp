@@ -55,3 +55,15 @@ directives.directive('swappable', function(){
         }
     }
 })
+
+directives.directive('activeNav', ['$location', function($location){
+    return {
+        restrict: 'A',
+        link: function(scope, elem, attr){
+            var path = $location.path().split('/')[1];
+            if (path == attr.id){
+                elem.addClass('active');
+            }
+        }
+    }
+}]);

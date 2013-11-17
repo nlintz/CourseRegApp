@@ -463,5 +463,6 @@ controllers.controller('LoginController', ['$scope', '$location', 'Schedule', 'U
 	};
 }]);
 
-controllers.controller('TopNavigationController', ['$scope', function($scope){
+controllers.controller('TopNavigationController', ['$scope', '$location', function($scope, $location){
+ 	
  }]);
