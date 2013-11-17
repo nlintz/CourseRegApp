@@ -45,4 +45,16 @@ directives.directive('affixed', function(){
             });
         }
     }
+});
+
+directives.directive('swappable', function(){
+    return {
+        restrict: 'A',
+        scope: {
+            course: '=course'
+        },
+        link: function(scope, elem, attr){
+            console.log('skurp')
+        }
+    }
 })

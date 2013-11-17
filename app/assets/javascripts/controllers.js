@@ -268,7 +268,7 @@ controllers.controller('SearchController', ['$scope', '$location', function($sco
 	};
 }]);
 
-controllers.controller('CourseSidebarController', ['$scope', '$filter', 'angularFire', 'Schedule', function($scope, $filter, angularFire, Schedule, ClassesStub){
+controllers.controller('CourseSidebarController', ['$scope', '$filter', '$element', 'angularFire', 'Schedule', function($scope, $filter, $element, angularFire, Schedule, ClassesStub){
 	var AllClasses = new Firebase("https://team-cinnamon.firebaseio.com/AllClasses");
 	var SidebarCoursesPromise = angularFire(AllClasses, $scope, "allCourses");
 	
@@ -303,6 +303,10 @@ controllers.controller('CourseSidebarController', ['$scope', '$filter', 'angular
 		return {
 			'background-color':course.course.color
 		}
+	}
+
+	$scope.transition = function(){
+		console.log($scope)
 	}
 }]);
 
