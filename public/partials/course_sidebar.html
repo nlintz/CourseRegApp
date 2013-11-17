@@ -1,8 +1,9 @@
-<div class="container sidebar" id="sidebar-container" ng-controller="CourseSidebarController">
+<div class="container sidebar panel panel-default" id="sidebar-container" ng-controller="CourseSidebarController">
 	<div class="row">
-		<div class="col-md-12">
-			<h1>Course Priority</h1>
+		<div class="col-md-12 panel-heading">
+			<h1 class="panel-title">Course Priority</h1>
 			<p>You will automatically be registered for these courses when your registration period opens.</p>
+			<p>Your registration period starts <b>November 12th at 6:00 PM</b></p>
 		</div>
 		<div class="col-md-12">
 			<div class="row" ng-repeat="course in user.schedule | orderBy:'priority'" swappable>
