@@ -11,7 +11,7 @@
   </div>
   <div class="col-md-6" ng-controller="SearchController">
     <div class="input-group input-search-container">
-        <input type="text" class="form-control" placeholder="Search for classes" name="search-term" id="search-term" ng-model="searchModel" ui-keypress="{13:'searchForClasses(searchModel)'}">
+        <input type="text" class="form-control" placeholder="Search for classes (e. g. Biology, HFID, Sanjoy, AHS" name="search-term" id="search-term" ng-model="searchModel" ui-keypress="{13:'searchForClasses(searchModel)'}">
         <div class="input-group-btn">
           <button class="btn btn-default" type="submit" ng-click="searchForClasses(searchModel)"><i class="glyphicon glyphicon-search"></i></button>
         </div>
