@@ -40,16 +40,12 @@ directives.directive('affixed', function(){
     return {
         restrict: 'A',
         link: function(scope, elem, attrs) {
-            scope.$watch(
-                function(){return elem.offset().top},
-                function(newValue, oldValue){
-                    var marginTop = $('div.calendar').css('margin-top').substring(0,2);
-                    console.log(newValue - marginTop)
-                    elem.affix({
-                        offset: { top: newValue - marginTop }
-                    });
-            });
-        }
+                // var marginTop = $('div.calendar').css('margin-top').substring(0,2);
+                var marginTop = 0;
+                elem.affix({
+                    offset: { top: elem.offset().top - marginTop }
+                });
+            }
     }
 });
 
