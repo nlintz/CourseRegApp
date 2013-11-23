@@ -1,35 +1,35 @@
 <!-- Jquery Css Anchors -->
 <div class="calendar-column" style="display: none"></div>
 <div class="axes-time" style="display: none"></div>
-<!-- /Jquery Css Anchors -->
+<div class="calendar affix" style="display: none"></div>
 
-<div class="panel panel-default">
-  <div class="panel-body">
-    Panel content
-  </div>
-  <div class="panel-footer">Panel footer</div>
-</div>
-<div ng-controller="CalendarController" class="panel panel-default" affixed>
-	<div class="row">
-		<div class="col-md-1 calendar-axes-container">
-			<div class="row" ng-repeat="axesTime in axesData">
-				<div class="axes-time">
-					{{axesTime.time}}
+<!-- Calendar sidebar -->
+<div ng-controller="CalendarController" affixed class="calendar">
+	<course-conflict-header conflicting-courses="conflictingCourses"></course-conflict-header>
+
+	<div class="panel panel-default">
+		<div class="row">
+			<div class="col-md-1 calendar-axes-container">
+				<div class="row" ng-repeat="axesTime in axesData">
+					<div class="axes-time">
+						{{axesTime.time}}
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="col-md-10 col-md-offset-1 calendar-events-container">
-			<div class="col-md-2 calendar-column" ng-repeat="day in sectionsInCalendar">
-				<p class="day-of-week">{{day.dayCode}}</p>
-				<div class="schedule-column-container">
-					<div ng-repeat="section in day.sections">
-						<div class="calendar-event" ng-style="styleSection(section)" ng-click="switchSection(section)">
-							<p>{{section.courseName | truncate:30:' '}}</p>
-							<p ng-show=" section.width == 1 ">Section: {{strToInt(section.sectionNumber, 10) + 1 }}</p>
+			<div class="col-md-10 col-md-offset-1 calendar-events-container">
+				<div class="col-md-2 calendar-column" ng-repeat="day in sectionsInCalendar">
+					<p class="day-of-week">{{day.dayCode}}</p>
+					<div class="schedule-column-container">
+						<div ng-repeat="section in day.sections">
+							<div class="calendar-event" ng-style="styleSection(section)" ng-click="switchSection(section)">
+								<p>{{section.courseName | truncate:30:' '}}</p>
+								<p ng-show=" section.width == 1 ">Section: {{strToInt(section.sectionNumber, 10) + 1 }}</p>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+				<!-- Conflict Header -->
 	</div>
 </div>

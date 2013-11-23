@@ -1,9 +1,19 @@
 .btn-up-down
 {
-	width:50px;
+	width:32px;
 	height: 50px;
 	margin-bottom: 5px;
+	margin-left: 10px;
+	padding-left: 8px;
+	opacity: .5;
 }
+
+.btn-remove-course
+{
+	border-radius: 2px;
+	background: transparent;
+}
+
 #sidebar-container.affix {
 	width: 22%;
 }
@@ -16,6 +26,10 @@
 .sidebar-plus-btn{
 	height: 20px;
 	background-color: transparent;
+}
+
+.close {
+	opacity: .4;
 }
 
 .close-sidebar-element{

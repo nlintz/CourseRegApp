@@ -1,0 +1,6 @@
+<div ng-show="conflictingCourses.coursesConflict">
+	<div class="alert alert-danger alert-dismissable">
+	  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	  <strong>Warning. You Have Classes Scheduled For The Same Time On </strong> <span ng-repeat="day in daysWithConflicts">{{day | dayFromDayCode}} </span>
+	</div>
+</div>

@@ -1,17 +1,20 @@
 var controllers = angular.module('Controllers', []);
+var colorIndex = 0;
 
 function preprocessCourses(courses, Schedule){
-	var colors = ["#1abc9c", "#27ae60", "#2980b9", "#8e44ad", "#c0392b", "#f39c12"];
-	var colorIndex = 0;
-
 	angular.forEach(courses, function(course){
 		course.available = (course.available == 'true' || course.available == true) ? true : false;
 		if (course.color == undefined){
-			course.color = colors[colorIndex];
-			colorIndex += 1;
+			addColorToCourse(course, colorIndex);
+			colorIndex = (colorIndex + 1)%6;
 		};
 	});
 };
+
+function addColorToCourse(course, colorIndex){
+	var colors = ["#666DBA", "#828B90", "#3D8487", "#68BABD", "#640042", "#f39c12"];
+	course.color = colors[colorIndex];
+}
 
 controllers.controller('RequirementsController', ['$scope', 'angularFire', 'User', 'Schedule', function($scope, angularFire, User, Schedule){
 	var GeneralRequirementsUrl = new Firebase("https://team-cinnamon.firebaseio.com/GeneralRequirements");
@@ -150,6 +153,23 @@ controllers.controller('CalendarController', ['$scope', 'Schedule', function($sc
 		return {start:startHour*60 + startTime[1], end:endHour*60 + endTime[1]};
 	};
 
+	function conflictingCourses(day){
+		var conflictingCoursesData = {dayCode:day.dayCode, conflictingCourseList:[]};
+		angular.forEach(day.sections, function(section){
+			if (section.width < 1){
+				conflictingCoursesData.conflictingCourseList.push(section);
+			};
+		});
+		return conflictingCoursesData;
+	};
+
+	function findCourseConflicts(day){
+		if (conflictingCourses(day).conflictingCourseList.length > 0){
+			$scope.conflictingCourses.coursesConflict = true;
+			$scope.conflictingCourses.coursesInConflict.push(conflictingCourses(day));
+		};
+	}
+
 	function sectionsInCalendar(){
 		return [{sections:[], dayCode:"M"}, 
 		{sections:[], dayCode:"T"}, 
@@ -162,6 +182,7 @@ controllers.controller('CalendarController', ['$scope', 'Schedule', function($sc
 
 	$scope.$watchCollection('user.schedule', function(scheduleElements){
 		$scope.sectionsInCalendar = new sectionsInCalendar();
+		$scope.conflictingCourses = {coursesConflict:false, coursesInConflict:[]};
 
 		angular.forEach(scheduleElements, function(scheduleElement){
 			angular.forEach(scheduleElement.course.sections, function(section){
@@ -198,6 +219,7 @@ controllers.controller('CalendarController', ['$scope', 'Schedule', function($sc
 		angular.forEach($scope.sectionsInCalendar, function(day){
 			var sortedCourses = sortService.sortEventsByStartTime(day.sections);
 			var processedData = eventsDataService.getEventsData(sortedCourses, Schedule);
+			findCourseConflicts(day);
 		});
 	});
 	
@@ -268,7 +290,7 @@ controllers.controller('SearchController', ['$scope', '$location', function($sco
 	};
 }]);
 
-controllers.controller('CourseSidebarController', ['$scope', '$filter', '$element', 'angularFire', 'Schedule', function($scope, $filter, $element, angularFire, Schedule, ClassesStub){
+controllers.controller('CourseSidebarController', ['$scope', '$filter', '$element', '$timeout', 'angularFire', 'Schedule', function($scope, $filter, $element, $timeout, angularFire, Schedule, ClassesStub){
 	var AllClasses = new Firebase("https://team-cinnamon.firebaseio.com/AllClasses");
 	var SidebarCoursesPromise = angularFire(AllClasses, $scope, "allCourses");
 	
@@ -277,6 +299,7 @@ controllers.controller('CourseSidebarController', ['$scope', '$filter', '$elemen
 	});
 
 	$scope.sidebarAddModel = "";
+	$scope.submitted = false;
 
 	$scope.addCourseFromSidebar = function(course){
 		if ($scope.sidebarAddModel){
@@ -305,8 +328,8 @@ controllers.controller('CourseSidebarController', ['$scope', '$filter', '$elemen
 		}
 	}
 
-	$scope.transition = function(){
-		console.log($scope)
+	$scope.submitToRegistrar = function(){
+		$scope.submitted = true;
 	}
 }]);
 

@@ -40,8 +40,14 @@ directives.directive('affixed', function(){
     return {
         restrict: 'A',
         link: function(scope, elem, attrs) {
-            elem.affix({
-                offset: { top: elem.offset().top }
+            scope.$watch(
+                function(){return elem.offset().top},
+                function(newValue, oldValue){
+                    var marginTop = $('div.calendar').css('margin-top').substring(0,2);
+                    console.log(newValue - marginTop)
+                    elem.affix({
+                        offset: { top: newValue - marginTop }
+                    });
             });
         }
     }
@@ -65,5 +71,23 @@ directives.directive('activeNav', ['$location', function($location){
                 elem.addClass('active');
             }
         }
+    }
+}]);
+
+directives.directive('courseConflictHeader', [function(){
+    return {
+        restrict: 'E',
+        scope: {
+            conflictingCourses: "=conflictingCourses"
+        },
+        templateUrl: 'partials/courseConflictHeader.html',
+        link: function(scope, elem, attr){
+            scope.$watch('conflictingCourses', function(){
+                scope.daysWithConflicts = [];
+                angular.forEach(scope.conflictingCourses.coursesInConflict, function(course){
+                    scope.daysWithConflicts.push(course.dayCode);
+                })
+            })
+        }    
     }
 }]);

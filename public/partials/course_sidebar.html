@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="col-md-12 panel-heading">
 			<h1 class="panel-title">Course Priority</h1>
-			<p>You will automatically be registered for these courses when your registration period opens.</p>
+			<p>You will automatically be registered for the first 4 courses in the list below when your registration period opens.</p>
 			<p>Your registration period starts <b>November 12th at 6:00 PM</b></p>
 		</div>
 		<div class="col-md-12">
@@ -26,7 +26,7 @@
 							<p>Section: {{course.section + 1}}</p>
 						</div>
 						<div class="col-md-2 close-sidebar-element">
-							<button type="button" class="btn" ng-click="removeCourseFromSchedule(course.course)">
+							<button type="button" class="btn btn-remove-course" ng-click="removeCourseFromSchedule(course.course)">
 								<a class="close">x</a>
 							</button>
 						</div>
@@ -46,6 +46,20 @@
 					</div>
 				</div>
 			</div>
+			<br>
+			<div ng-show="submitted">
+				<div class="alert alert-warning alert-dismissable">
+					  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					  <strong>Your schedule has been submitted to the registrar.</strong>You can still edit your schedule for next semester and resubmit it to the registrar.
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<button class="btn btn-default-btn-large" ng-click="submitToRegistrar()">Submit Schedule To Registrar</button>
+				</div>
+			</div>
+			<br>
 		</div>
 	</div>
 </div>

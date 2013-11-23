@@ -36,3 +36,13 @@ filters.filter('twentyFourHour', function(){
         }
     }
 })
+
+filters.filter('dayFromDayCode', function(){
+    return function(dayCode){
+        if (dayCode == 'M'){return 'Monday '}
+        if (dayCode == 'T'){return 'Tuesday '}
+        if (dayCode == 'W'){return 'Wednesday '}
+        if (dayCode == 'Th'){return 'Thursday '}
+        if (dayCode == 'F'){return 'Friday '}
+    }
+})
