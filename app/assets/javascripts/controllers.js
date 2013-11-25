@@ -156,6 +156,7 @@ controllers.controller('CalendarController', ['$scope', 'Schedule', function($sc
 	function conflictingCourses(day){
 		var conflictingCoursesData = {dayCode:day.dayCode, conflictingCourseList:[]};
 		angular.forEach(day.sections, function(section){
+			console.log(day)
 			if (section.width < 1){
 				conflictingCoursesData.conflictingCourseList.push(section);
 			};
