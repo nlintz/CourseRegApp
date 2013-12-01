@@ -1,3 +1,5 @@
+$grid-color: #BAC7CF;
+
 .axes-time {
 	height: 48px;
 }
@@ -31,6 +33,14 @@
 	padding-left: 0!important;
 	padding-right: 0!important;
 	width: 72px !important;
+
+	p.day-of-week {
+		border-bottom: 1px solid $grid-color;
+	}
+}
+
+.calendar-column:not(:first-of-type) {
+	border-left: 1px solid $grid-color;
 }
 
 .calendar.affix{
@@ -53,4 +63,5 @@
 
 .schedule-column-container {
 	position: relative;
+	height: 480px;
 }

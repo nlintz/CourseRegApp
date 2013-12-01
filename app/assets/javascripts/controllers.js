@@ -129,7 +129,6 @@ controllers.controller('ClassListController', ['$scope', '$routeParams',  'angul
 
 	$scope.removeCourseFromSchedule = function(course){
 		Schedule.removeCourse(course);
-		$scope.user.schedule = Schedule.getCourses();
 	};
 
 }]);
@@ -315,7 +314,6 @@ controllers.controller('CourseSidebarController', ['$scope', '$filter', '$elemen
 
 	$scope.removeCourseFromSchedule = function(course){
 		Schedule.removeCourse(course);
-		$scope.user.schedule = Schedule.getCourses();
 	};
 
 	$scope.stylePanel = function(course){

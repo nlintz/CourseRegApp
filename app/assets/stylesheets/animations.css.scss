@@ -1,0 +1,15 @@
+.fade-in-enter, 
+.fade-in-leave
+{ 
+    -webkit-transition: .5s cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+} 
+ 
+.fade-in-enter.fade-in-enter-active, 
+.fade-in-leave {
+    opacity: 1;
+}
+ 
+.fade-in-leave.fade-in-leave-active,
+.fade-in-enter {
+    opacity: 0;
+}
