@@ -207,19 +207,19 @@ controllers.controller('CalendarController', ['$scope', 'Schedule', function($sc
 				section.courseName = scheduleElement.course.className;
 
 				if (section.meetingDays.indexOf("Monday") >= 0){
-					$scope.sectionsInCalendar[0].sections.push(section)
+					$scope.sectionsInCalendar[0].sections.push(Object.create(section));
 				};
 				if (section.meetingDays.indexOf("Tuesday") >= 0){
-					$scope.sectionsInCalendar[1].sections.push(section)
+					$scope.sectionsInCalendar[1].sections.push(Object.create(section));
 				};
 				if (section.meetingDays.indexOf("Wednesday") >= 0){
-					$scope.sectionsInCalendar[2].sections.push(section)
+					$scope.sectionsInCalendar[2].sections.push(Object.create(section));
 				};
 				if (section.meetingDays.indexOf("Thursday") >= 0){
-					$scope.sectionsInCalendar[3].sections.push(section)
+					$scope.sectionsInCalendar[3].sections.push(Object.create(section));
 				};
 				if (section.meetingDays.indexOf("Friday") >= 0){
-					$scope.sectionsInCalendar[4].sections.push(section)
+					$scope.sectionsInCalendar[4].sections.push(Object.create(section));
 				};
 
 			});
@@ -228,6 +228,7 @@ controllers.controller('CalendarController', ['$scope', 'Schedule', function($sc
 		angular.forEach($scope.sectionsInCalendar, function(day){
 			var sortedCourses = sortService.sortEventsByStartTime(day.sections);
 			var processedData = eventsDataService.getEventsData(sortedCourses, Schedule);
+			console.log(day)
 			findCourseConflicts(day);
 		});
 	});
