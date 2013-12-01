@@ -53,6 +53,7 @@ services.service('Schedule', ['User', function(User){
 		return false
 	};
 
+
 	this.addCourse = function(course, section, priority){
 		if (this.inSchedule(course) == false){
 			var scheduleElement = {course:course, section:String(section), priority:String(priority)};

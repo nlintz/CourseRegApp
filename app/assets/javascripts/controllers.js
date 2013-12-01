@@ -92,6 +92,7 @@ controllers.controller('ClassListController', ['$scope', '$routeParams',  'angul
 	schedulePromise.then(function(){
 		Schedule.setCourses($scope.firebaseSchedule);
 		$scope.user.schedule = Schedule.getCourses();
+		console.log($scope.user.schedule);
 	});
 
 	$scope.$watchCollection('firebaseSchedule', function(scheduleElements){
