@@ -227,7 +227,7 @@ controllers.controller('CalendarController', ['$scope', 'Schedule', function($sc
 		
 		angular.forEach($scope.sectionsInCalendar, function(day){
 			var sortedCourses = sortService.sortEventsByStartTime(day.sections);
-			var processedData = eventsDataService.getEventsData(sortedCourses, Schedule);
+			var processedData = eventsDataService.getEventsData(sortedCourses);
 			findCourseConflicts(day);
 		});
 	});
