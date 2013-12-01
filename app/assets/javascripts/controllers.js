@@ -61,7 +61,7 @@ controllers.controller('RequirementsController', ['$scope', 'angularFire', 'User
 	};
 
 	$scope.courseInSchedule = function(course){
-		if (Schedule.inSchedule(course)){
+		if (Schedule.inSchedule(course)) {
 			return true;
 		}
 		else {
@@ -92,7 +92,6 @@ controllers.controller('ClassListController', ['$scope', '$routeParams',  'angul
 	schedulePromise.then(function(){
 		Schedule.setCourses($scope.firebaseSchedule);
 		$scope.user.schedule = Schedule.getCourses();
-		console.log($scope.user.schedule);
 	});
 
 	$scope.$watchCollection('firebaseSchedule', function(scheduleElements){
@@ -114,9 +113,18 @@ controllers.controller('ClassListController', ['$scope', '$routeParams',  'angul
 		};
 	};
 
+	$scope.sectionInSchedule = function(course){
+		return Schedule.inSchedule(course, {getSectionInSchedule:true});
+	}
+
 
 	$scope.sectionAvailable = function(section){
 		return section.available ? true : false;
+	};
+
+	$scope.switchSection = function(section, course){
+		section.courseName = course.className;
+		Schedule.switchSection(section);
 	};
 
 	$scope.removeCourseFromSchedule = function(course){
@@ -225,20 +233,7 @@ controllers.controller('CalendarController', ['$scope', 'Schedule', function($sc
 	});
 	
 	$scope.switchSection = function(section){
-		angular.forEach($scope.user.schedule, function(scheduleElement){
-			if (scheduleElement.course.className == section.courseName){
-				scheduleElement.section = section.sectionNumber;
-
-				angular.forEach(scheduleElement.course.sections, function(courseSection){
-					courseSection.selectedSection = (courseSection.selectedSection == section) ? true : false;
-				});
-			};
-		});
-		if (!section.selectedSection){
-			section.selectedSection = true;
-		};
-
-		Schedule.updateScheduleInFirebase();
+		Schedule.switchSection(section);
 	};
 
 	$scope.styleSection = function(section){

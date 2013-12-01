@@ -13,11 +13,11 @@
 				</div>
 				<div class="panel-body">
 					<div class="row">
-						<div class="col-md-6 col-sm-6 col-xs-6">
+						<div class="col-md-4 col-sm-6 col-xs-6">
 							<p>{{course.description | truncate:150}}</p>
 							<p learn-more-modal modal-course="course" schedule="scheduleService"></p>
 						</div>
-						<div class="col-md-6 col-sm-6 col-xs-6">
+						<div class="col-md-8 col-sm-6 col-xs-6">
 							<div class="btn-group" ng-repeat="section in course.sections">
 								<div class="row">
 									<p>{{section.meetingDays | ArrayToString}}: {{section.startTime | twentyFourHour}}-{{section.endTime | twentyFourHour}}</p>
@@ -29,8 +29,19 @@
 						    				<button type="button" class="btn btn-danger" disabled="disabled">Drop Class</button>
 					    				</div>
 					    				<div ng-show="courseInSchedule(course)">
-						    				<button type="button" class="btn btn-success" disabled="disabled">Add Class</button>
-								    		<button type="button" class="btn btn-danger" ng-click="removeCourseFromSchedule(course)">Drop Class</button>
+
+					    					<!-- <div ng-bind="sectionInSchedule(course)">swag</div> -->
+					    					<!-- <div ng-bind="section.sectionNumber"></div> -->
+					    					<div ng-show=" sectionInSchedule(course) == section.sectionNumber ">
+							    				<button type="button" class="btn btn-success" disabled="disabled">Add Class</button>
+									    		<button type="button" class="btn btn-danger" ng-click="removeCourseFromSchedule(course)">Drop Class</button>
+									    	</div>
+
+									    	<div ng-hide=" sectionInSchedule(course) == section.sectionNumber ">
+							    				<button type="button" class="btn btn-warning" ng-click="switchSection(section, course)">Switch To This Section</button>
+									    		<button type="button" class="btn btn-danger" ng-click="removeCourseFromSchedule(course)">Drop Class</button>
+									    	</div>
+
 							    		</div>
 						    		</div>
 			    				</div>

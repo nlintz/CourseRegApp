@@ -23,37 +23,6 @@ services.service('Schedule', ['User', function(User){
 	this.scheduleRef = new Firebase('https://team-cinnamon.firebaseio.com/Schedule/' + User.name);
 	this.courses = [];
 
-	this.setCourses = function(courses){
-		var schedule = [];
-		angular.forEach(courses, function(course){
-			schedule.push({course: JSON.parse(course.course), section: parseInt(course.section, 10), priority: parseInt(course.priority, 10)});
-		});
-		this.courses = schedule;
-	}
-
-	this.updateScheduleInFirebase = function(){
-		this.scheduleRef.set(this.formatCoursesForFirebase(this.courses));	
-	}
-
-	this.resetSchedule =  function(){
-		this.scheduleRef.set([]);
-	}
-
-	this.getCourses = function(courses){
-		this.scheduleRef = new Firebase('https://team-cinnamon.firebaseio.com/Schedule/' + User.name); // Todo move this to init b/c not part of getCourses logic
-		return this.courses;
-	}
-
-	this.inSchedule = function(course){
-		for (var i=0; i<this.courses.length; i++){
-			if (this.courses[i].course.className == course.className){
-				return true;
-			};
-		};
-		return false
-	};
-
-
 	this.addCourse = function(course, section, priority){
 		if (this.inSchedule(course) == false){
 			var scheduleElement = {course:course, section:String(section), priority:String(priority)};
@@ -64,8 +33,35 @@ services.service('Schedule', ['User', function(User){
 		};
 	};
 
-	this.sortCourses = function(){
-		this.courses = _.sortBy(this.courses, function(course){return course.priority});
+	this.getCourses = function(courses){
+		this.scheduleRef = new Firebase('https://team-cinnamon.firebaseio.com/Schedule/' + User.name); // Todo move this to init b/c not part of getCourses logic
+		return this.courses;
+	}
+
+	this.formatCoursesForFirebase = function(courses){
+		var formattedCourses = [];
+		angular.forEach(courses, function(course){
+			formattedCourses.push({course:JSON.stringify(course.course), section:String(course.section), priority:String(course.priority)});
+		});
+		return formattedCourses;
+	};
+
+	this.inSchedule = function(course, options){
+		for (var i=0; i<this.courses.length; i++){
+			if (this.courses[i].course.className == course.className){
+				if (options){
+					if (options.getSectionInSchedule) {
+						return this.courses[i].section;
+					}
+				}
+				return true;
+			};
+		};
+		return false
+	};
+
+	this.resetSchedule =  function(){
+		this.scheduleRef.set([]);
 	}
 
 	this.reprioritizeCourses = function(){
@@ -87,14 +83,6 @@ services.service('Schedule', ['User', function(User){
 		this.courses.splice(indexToRemove, 1);
 		this.reprioritizeCourses();
 		this.scheduleRef.set(this.formatCoursesForFirebase(this.courses));
-	};
-
-	this.formatCoursesForFirebase = function(courses){
-		var formattedCourses = [];
-		angular.forEach(courses, function(course){
-			formattedCourses.push({course:JSON.stringify(course.course), section:String(course.section), priority:String(course.priority)});
-		});
-		return formattedCourses;
 	};
 
 	this.swapCourses = function(index, direction){
@@ -119,6 +107,41 @@ services.service('Schedule', ['User', function(User){
 		};
 		this.sortCourses();
 		this.updateScheduleInFirebase();
+	};
+
+	this.setCourses = function(courses){
+		var schedule = [];
+		angular.forEach(courses, function(course){
+			schedule.push({course: JSON.parse(course.course), section: parseInt(course.section, 10), priority: parseInt(course.priority, 10)});
+		});
+		this.courses = schedule;
+	};
+
+	this.switchSection = function(section){
+		angular.forEach(this.courses, function(scheduleElement){
+			console.log(section)
+			console.log(scheduleElement.course.className)
+			if (scheduleElement.course.className == section.courseName){
+				scheduleElement.section = section.sectionNumber;
+
+				angular.forEach(scheduleElement.course.sections, function(courseSection){
+					courseSection.selectedSection = (courseSection.selectedSection == section) ? true : false;
+				});
+			};
+		});
+		if (!section.selectedSection){
+			section.selectedSection = true;
+		};
+
+		this.updateScheduleInFirebase();
+	};
+
+	this.sortCourses = function(){
+		this.courses = _.sortBy(this.courses, function(course){return course.priority});
+	};
+
+	this.updateScheduleInFirebase = function(){
+		this.scheduleRef.set(this.formatCoursesForFirebase(this.courses));	
 	};
 
 }]);
