@@ -119,8 +119,6 @@ services.service('Schedule', ['User', function(User){
 
 	this.switchSection = function(section){
 		angular.forEach(this.courses, function(scheduleElement){
-			console.log(section)
-			console.log(scheduleElement.course.className)
 			if (scheduleElement.course.className == section.courseName){
 				scheduleElement.section = section.sectionNumber;
 
