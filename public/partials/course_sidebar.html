@@ -7,9 +7,9 @@
 		</div>
 		<div class="col-md-12">
 			<div class="row" ng-repeat="course in user.schedule | orderBy:'priority'" swappable>
-				<div class="col-md-11 col-md-offset-1 panel panel-default" ng-style="stylePanel(course)">
+				<div class="col-md-11 col-md-offset-1 col-xs-12 panel panel-default" ng-style="stylePanel(course)">
 					<div class="row panel-body">
-						<div class="col-md-2 up-down-container">
+						<div class="col-md-2 col-xs-2 up-down-container">
 							<div class="row">
 								<button type="button" class="btn btn-up-down" ng-click="changeCoursePriority($index, 'up')">
 									<span class="glyphicon glyphicon-arrow-up"></span>
@@ -21,7 +21,7 @@
 								</button>
 							</div>
 						</div>
-						<div class="col-md-8">
+						<div class="col-md-8 col-xs-8">
 							<p>{{course.course.className}}</p>
 							<p>Section: {{course.section + 1}}</p>
 						</div>

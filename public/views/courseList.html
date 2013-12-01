@@ -1,10 +1,10 @@
 <ng-include src="'/partials/topNav.html'"></ng-include>
 <ng-include src="'/partials/secondaryNav.html'"></ng-include>
 <div class="row">
-	<div class="col-md-3 col-sm-3 col-xs-3">
+	<div class="col-md-3 col-sm-3 col-xs-6">
 		<div ng-include src="'/partials/course_sidebar.html'"></div>
 	</div>
-	<div class="col-md-5 col-sm-5 col-xs-9">
+	<div class="col-md-5 col-sm-5 col-xs-6">
 		<div class="row" ng-repeat="course in classList | filter:searchQuery">
 			<div class="panel panel-default">
 				<div class="panel-heading">
