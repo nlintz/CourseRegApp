@@ -12,7 +12,7 @@ function preprocessCourses(courses, Schedule){
 };
 
 function addColorToCourse(course, colorIndex){
-	var colors = ["#666DBA", "#828B90", "#3D8487", "#68BABD", "#640042", "#f39c12"];
+	var colors = ["#666DBA", "#828B90", "#3D8487", "#68BABD", "#688CD1", "#63A0C7"];
 	course.color = colors[colorIndex];
 }
 
