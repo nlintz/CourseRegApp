@@ -60,7 +60,7 @@ function EventDataService(){
 	};
 
 	// Gives each event a width
-	this.assignWidths =function(event, collidingEvents){
+	this.assignWidths = function(event, collidingEvents){
 		var events = collidingEvents.concat(event);
 		event.width = (event.width != undefined) ? Math.min(1.0/events.length, event.width) : 1.0/events.length;
 		for (var i=0; i<collidingEvents.length; i++){
