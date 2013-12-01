@@ -5,7 +5,6 @@ function preprocessCourses(courses, Schedule){
 	angular.forEach(courses, function(course){
 		course.available = (course.available == 'true' || course.available == true) ? true : false;
 		if (course.color == undefined){
-			// console.log(course.color);
 			addColorToCourse(course, colorIndex);
 			colorIndex = (colorIndex + 1)%6;
 		};
