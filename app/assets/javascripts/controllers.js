@@ -285,16 +285,23 @@ controllers.controller('SearchController', ['$scope', '$location', function($sco
 	};
 }]);
 
-controllers.controller('CourseSidebarController', ['$scope', '$filter', '$element', '$timeout', 'angularFire', 'Schedule', function($scope, $filter, $element, $timeout, angularFire, Schedule, ClassesStub){
+controllers.controller('CourseSidebarController', ['$scope', '$filter', '$element', '$timeout', '$routeParams', 'angularFire', 'Schedule', 'TestService', function($scope, $filter, $element, $timeout, $routeParams, angularFire, Schedule, TestService){
 	var AllClasses = new Firebase("https://team-cinnamon.firebaseio.com/AllClasses");
 	var SidebarCoursesPromise = angularFire(AllClasses, $scope, "allCourses");
-	
+
 	SidebarCoursesPromise.then(function(){
 		preprocessCourses($scope.allCourses, Schedule);
 	});
 
 	$scope.sidebarAddModel = "";
 	$scope.submitted = false;
+
+	$scope.testId = TestService.getTestId();
+	window.setTestId = function(testId){
+		TestService.setTestId(testId);
+		$scope.testId = TestService.getTestId();
+		$scope.$apply();
+	}
 
 	$scope.addCourseFromSidebar = function(course){
 		if ($scope.sidebarAddModel){
@@ -472,10 +479,13 @@ controllers.controller('AdminController', ['$scope', '$log', 'angularFire' ,'Adm
 	}
 }]);
 
-controllers.controller('LoginController', ['$scope', '$location', 'Schedule', 'User', function($scope, $location, Schedule, User){
+controllers.controller('LoginController', ['$scope', '$location', '$routeParams', 'Schedule', 'User', 'TestService', function($scope, $location, $routeParams, Schedule, User, TestService){
 	$scope.login = function(){
 		User.setUsername($scope.username);
 		$location.path('/requirements');
+	};
+	if ($routeParams.testId){
+		TestService.setTestId($routeParams.testId);
 	};
 }]);
 

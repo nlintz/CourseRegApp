@@ -168,3 +168,13 @@ services.service('User', ['$cookies', function($cookies){
 		};
 	}
 }]);
+
+services.service('TestService', [function(){
+	this.testId = 'default';
+	this.setTestId = function(testId){
+		this.testId = testId;
+	};
+	this.getTestId = function(){
+		return this.testId;
+	};
+}]);

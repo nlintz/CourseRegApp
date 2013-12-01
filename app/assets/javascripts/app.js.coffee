@@ -8,10 +8,7 @@ CourseRegistrationApp.config(['$routeProvider', '$locationProvider', ($routeProv
 	$routeProvider.when('/search', { templateUrl: '/views/courseList.html', controller: 'ClassListController', resolve: {ClassesStub: 'ClassesStub'} } );
 	$routeProvider.when('/requirements', { templateUrl: '/views/requirements.html', controller: 'RequirementsController', resolve: {ClassesStub: 'ClassesStub'}} );
 
-	$routeProvider.when('/courseList/:test', { templateUrl: '/views/courseList.html', controller: 'ClassListController', resolve: {ClassesStub: 'ClassesStub'} } );
-	$routeProvider.when('/search/:searchQuery/:test', { templateUrl: '/views/courseList.html', controller: 'ClassListController', resolve: {ClassesStub: 'ClassesStub'} } );
-	$routeProvider.when('/search/:test', { templateUrl: '/views/courseList.html', controller: 'ClassListController', resolve: {ClassesStub: 'ClassesStub'} } );
-	$routeProvider.when('/requirements/:test', { templateUrl: '/views/requirements.html', controller: 'RequirementsController', resolve: {ClassesStub: 'ClassesStub'}} );
+	$routeProvider.when('/login/test/:testId', {templateUrl: '/views/login.html', controller: 'LoginController'});
 
 	$routeProvider.when('/admin', { templateUrl: 'views/admin.html', controller:'AdminController'});
 	$routeProvider.otherwise({ redirectTo: '/login'});
