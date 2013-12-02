@@ -48,7 +48,6 @@ directives.directive('myCoursesModal', function() {
     
         link: function(scope, elem, attrs){
             scope.toggle = function(){
-                console.log(scope.schedule)
                 scope.nextSemesterSchedule = scope.schedule.slice(0, 4);
                 $("#my-courses-modal").modal('toggle');
             };
@@ -60,7 +59,6 @@ directives.directive('affixed', function(){
     return {
         restrict: 'A',
         link: function(scope, elem, attrs) {
-                // var marginTop = $('div.calendar').css('margin-top').substring(0,2);
                 var marginTop = 0;
                 elem.affix({
                     offset: { top: elem.offset().top - marginTop }

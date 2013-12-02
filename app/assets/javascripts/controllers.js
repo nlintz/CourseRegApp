@@ -296,10 +296,9 @@ controllers.controller('CourseSidebarController', ['$scope', '$filter', '$elemen
 	$scope.sidebarAddModel = "";
 	$scope.submitted = false;
 
-	// $scope.testId = TestService.getTestId();
-	$scope.testId = 3;
+	$scope.testId = TestService.getTestId();
 	$scope.scheduleService = Schedule;
-	
+
 	window.setTestId = function(testId){
 		TestService.setTestId(testId);
 		$scope.testId = TestService.getTestId();
@@ -495,3 +494,10 @@ controllers.controller('LoginController', ['$scope', '$location', '$routeParams'
 controllers.controller('TopNavigationController', ['$scope', '$location', function($scope, $location){
  	
  }]);
+
+controllers.controller('ABTestController', ['$scope', 'TestService', function($scope, TestService){
+	$scope.testId = TestService.getTestId();
+	$scope.changeTestId = function(){
+		TestService.setTestId($scope.testId);
+	}
+}]);
