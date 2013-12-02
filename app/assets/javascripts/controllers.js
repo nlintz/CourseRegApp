@@ -296,7 +296,10 @@ controllers.controller('CourseSidebarController', ['$scope', '$filter', '$elemen
 	$scope.sidebarAddModel = "";
 	$scope.submitted = false;
 
-	$scope.testId = TestService.getTestId();
+	// $scope.testId = TestService.getTestId();
+	$scope.testId = 3;
+	$scope.scheduleService = Schedule;
+	
 	window.setTestId = function(testId){
 		TestService.setTestId(testId);
 		$scope.testId = TestService.getTestId();

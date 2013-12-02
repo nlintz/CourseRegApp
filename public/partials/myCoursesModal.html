@@ -1,0 +1,27 @@
+<button class="btn btn-default-btn-large" ng-click="toggle()">Submit Schedule To Registrar</button>
+
+<div class="modal fade" id="my-courses-modal">
+  <div class="modal-dialog more-info">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" aria-hidden="true" ng-click="toggle()">&times;</button>
+        <h4 class="modal-title">Tenantive Schedule For Next Semester</h4>
+        <p>You've successfully registered for classes. You may edit your schedule at any point until your registration period.
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <p>Next semester, your schedule will likely be:</p>
+              <ul>
+                <li ng-repeat="scheduleElement in nextSemesterSchedule">{{scheduleElement.course.className}}</li>
+              </ul>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="toggle()">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

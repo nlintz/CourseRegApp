@@ -36,6 +36,26 @@ directives.directive('learnMoreModal', function(){
 	};
 });
 
+directives.directive('myCoursesModal', function() {
+    return {
+        restrict: 'A',
+    
+        scope: {
+            schedule: "=schedule"
+        },
+    
+        templateUrl: "/partials/myCoursesModal.html",
+    
+        link: function(scope, elem, attrs){
+            scope.toggle = function(){
+                console.log(scope.schedule)
+                scope.nextSemesterSchedule = scope.schedule.slice(0, 4);
+                $("#my-courses-modal").modal('toggle');
+            };
+        }
+    };
+});
+
 directives.directive('affixed', function(){
     return {
         restrict: 'A',
@@ -52,6 +72,7 @@ directives.directive('affixed', function(){
 directives.directive('swappable', function(){
     return {
         restrict: 'A',
+        replace: 'false',
         link: function(scope, elem, attr){
             // console.log()
         }
