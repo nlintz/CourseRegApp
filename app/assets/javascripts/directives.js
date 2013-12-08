@@ -29,7 +29,6 @@ directives.directive('learnMoreModal', function(){
             }
 
         	scope.formatId = function(className){
-        		// console.log(className)
         		return className.split(" ").join("");
         	};
       	}
@@ -72,7 +71,6 @@ directives.directive('swappable', function(){
         restrict: 'A',
         replace: 'false',
         link: function(scope, elem, attr){
-            // console.log()
         }
     }
 })
@@ -101,11 +99,33 @@ directives.directive('courseConflictHeader', [function(){
         templateUrl: 'partials/courseConflictHeader.html',
         link: function(scope, elem, attr){
             scope.$watch('conflictingCourses', function(){
-                scope.daysWithConflicts = [];
-                angular.forEach(scope.conflictingCourses.coursesInConflict, function(course){
-                    scope.daysWithConflicts.push(course.dayCode);
-                })
-            })
+                var daysWithConflicts = [];
+                // var daysWithConflicts = _.map(scope.conflictingCourses.coursesInConflict, function(day){return day.dayCode});
+                var coursesInConflict = scope.conflictingCourses.coursesInConflict;
+                angular.forEach(coursesInConflict, function(day){
+                    var conflictCount = _.reduce(day.conflictingCourseList, function(memo, section){
+                        if (section.selectedSection == true){
+                            return memo + 1;
+                        }
+                        else {
+                            return memo;
+                        }
+                    }, 0)
+                    if (conflictCount > 1){
+                        daysWithConflicts.push(day.dayCode);
+                    };
+                });
+                scope.daysWithConflicts = daysWithConflicts;
+            });
+            scope.areConflicts = function(daysWithConflicts){
+                if (daysWithConflicts == undefined) return
+                if(daysWithConflicts.length > 0){
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
         }    
     }
 }]);

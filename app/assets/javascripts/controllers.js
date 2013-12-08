@@ -235,7 +235,6 @@ controllers.controller('CalendarController', ['$scope', 'Schedule', function($sc
 	});
 	
 	$scope.switchSection = function(section){
-		console.log(section)
 		Schedule.switchSection(section);
 	};
 

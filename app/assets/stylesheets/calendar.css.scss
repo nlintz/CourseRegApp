@@ -49,6 +49,7 @@ $grid-color: #BAC7CF;
 .calendar-event {
 	position: absolute;
 	border-radius: 5px;
+	cursor: pointer;
 	p {
 		text-align: center;
 		word-wrap: break-word;
