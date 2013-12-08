@@ -23,7 +23,7 @@
 						</div>
 						<div class="col-md-8 col-xs-8">
 							<p>{{course.course.className}}</p>
-							<p>Section: {{course.section + 1}}</p>
+							<p>Section: {{course.section | parseSectionNumber}}</p>
 						</div>
 						<div class="col-md-2 close-sidebar-element">
 							<button type="button" class="btn btn-remove-course" ng-click="removeCourseFromSchedule(course.course)">
@@ -49,7 +49,7 @@
 			<br>
 			<div ng-show="submitted">
 				<div class="alert alert-warning alert-dismissable" ng-show="testId == 'default' || testId == '2'">
-					  <button type="button" class="close" aria-hidden="true">&times;</button>
+					  <button type="button" class="close" aria-hidden="true" data-dismiss="alert">&times;</button>
 					  <strong>Your schedule has been submitted to the registrar.</strong> You will be automatically registered for the first 4 courses in the list above. You can still edit your schedule for next semester and resubmit it to the registrar.
 				</div>
 			</div>

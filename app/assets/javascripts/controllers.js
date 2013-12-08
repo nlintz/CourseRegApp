@@ -186,6 +186,24 @@ controllers.controller('CalendarController', ['$scope', 'Schedule', function($sc
 		{sections:[], dayCode:"F"}]
 	};
 
+	function placeInCalendarDay(section){
+		if (section.meetingDays.indexOf("Monday") >= 0){
+			$scope.sectionsInCalendar[0].sections.push($.extend({}, section));
+		};
+		if (section.meetingDays.indexOf("Tuesday") >= 0){
+			$scope.sectionsInCalendar[1].sections.push($.extend({}, section));
+		};
+		if (section.meetingDays.indexOf("Wednesday") >= 0){
+			$scope.sectionsInCalendar[2].sections.push($.extend({}, section));
+		};
+		if (section.meetingDays.indexOf("Thursday") >= 0){
+			$scope.sectionsInCalendar[3].sections.push($.extend({}, section));
+		};
+		if (section.meetingDays.indexOf("Friday") >= 0){
+			$scope.sectionsInCalendar[4].sections.push($.extend({}, section));
+		};
+	};
+
 	$scope.sectionsInCalendar = new sectionsInCalendar();
 
 	$scope.$watchCollection('user.schedule', function(scheduleElements){
@@ -205,22 +223,7 @@ controllers.controller('CalendarController', ['$scope', 'Schedule', function($sc
 				section.selectedSection = (scheduleElement.section == section.sectionNumber) ? true : false;
 				section.courseName = scheduleElement.course.className;
 
-				if (section.meetingDays.indexOf("Monday") >= 0){
-					$scope.sectionsInCalendar[0].sections.push(Object.create(section));
-				};
-				if (section.meetingDays.indexOf("Tuesday") >= 0){
-					$scope.sectionsInCalendar[1].sections.push(Object.create(section));
-				};
-				if (section.meetingDays.indexOf("Wednesday") >= 0){
-					$scope.sectionsInCalendar[2].sections.push(Object.create(section));
-				};
-				if (section.meetingDays.indexOf("Thursday") >= 0){
-					$scope.sectionsInCalendar[3].sections.push(Object.create(section));
-				};
-				if (section.meetingDays.indexOf("Friday") >= 0){
-					$scope.sectionsInCalendar[4].sections.push(Object.create(section));
-				};
-
+				placeInCalendarDay(section);
 			});
 		});
 		
@@ -232,6 +235,7 @@ controllers.controller('CalendarController', ['$scope', 'Schedule', function($sc
 	});
 	
 	$scope.switchSection = function(section){
+		console.log(section)
 		Schedule.switchSection(section);
 	};
 

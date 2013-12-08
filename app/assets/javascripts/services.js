@@ -121,7 +121,6 @@ services.service('Schedule', ['User', function(User){
 		angular.forEach(this.courses, function(scheduleElement){
 			if (scheduleElement.course.className == section.courseName){
 				scheduleElement.section = section.sectionNumber;
-
 				angular.forEach(scheduleElement.course.sections, function(courseSection){
 					courseSection.selectedSection = (courseSection.selectedSection == section) ? true : false;
 				});

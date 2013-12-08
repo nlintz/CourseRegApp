@@ -82,6 +82,9 @@ directives.directive('activeNav', ['$location', function($location){
         restrict: 'A',
         link: function(scope, elem, attr){
             var path = $location.path().split('/')[1];
+            if (path == 'search'){
+                path = 'courseList';
+            }
             if (path == attr.id){
                 elem.addClass('active');
             }

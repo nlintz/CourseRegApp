@@ -35,7 +35,13 @@ filters.filter('twentyFourHour', function(){
             return time
         }
     }
-})
+});
+
+filters.filter('parseSectionNumber', function(){
+    return function(sectionNumber){
+        return parseInt(sectionNumber, 10) + 1;
+    }
+});
 
 filters.filter('dayFromDayCode', function(){
     return function(dayCode){
